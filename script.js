@@ -29,13 +29,12 @@ function setSpeed(speed) {
     }
 }
 
-// SISTEM RPM YANG DIPERBAIKI
+// SISTEM RPM
 function setRPM(rpm) {
     if (!elements.rpm) return;
     const val = Math.round(rpm);
     elements.rpm.innerText = `${val} RPM`;
 
-    // Berubah warna merah/redline jika RPM tinggi (misal di atas 2500)
     if (val >= 2500) {
         elements.rpm.classList.add('rpm-high');
     } else {
@@ -43,12 +42,20 @@ function setRPM(rpm) {
     }
 }
 
+// FUEL DENGAN KOMA (DESIMAL)
 function setFuel(fuelPercent) {
-    if (elements.fuel) elements.fuel.innerText = `${Math.round(fuelPercent * 100)}%/100%`;
+    if (elements.fuel) {
+        const val = (fuelPercent * 100).toFixed(1).replace('.', ',');
+        elements.fuel.innerText = `${val}%/100%`;
+    }
 }
 
+// HEALTH DENGAN KOMA (DESIMAL)
 function setHealth(health) {
-    if (elements.health) elements.health.innerText = `${Math.round(health * 100)}%/100%`;
+    if (elements.health) {
+        const val = (health * 100).toFixed(1).replace('.', ',');
+        elements.health.innerText = `${val}%/100%`;
+    }
 }
 
 function setGear(gear) {
