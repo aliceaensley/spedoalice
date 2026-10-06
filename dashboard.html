@@ -3,101 +3,297 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETS2 HUD Dashboard Admin</title>
+    <title>Dashboard Kendaraan HUD</title>
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css">
     <style>
-        body {
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
             background-color: #121212;
-            color: #ffffff;
+            color: #e0e0e0;
+            padding: 30px;
             display: flex;
             justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
         .card {
             background: #1e1e1e;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            width: 400px;
+            padding: 20px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            border: 1px solid #2a2a2a;
         }
-        h2 { margin-top: 0; color: #3498db; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-size: 13px; }
-        input, select {
-            width: 100%;
+        h2 {
+            margin-bottom: 15px;
+            color: #3498db;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        label {
+            font-size: 12px;
+            color: #aaa;
+            font-weight: bold;
+        }
+        input {
             padding: 10px;
             border-radius: 6px;
             border: 1px solid #333;
             background: #2b2b2b;
             color: #fff;
-            box-sizing: border-box;
+            font-size: 13px;
+        }
+        input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
         }
         button {
-            width: 100%;
-            padding: 12px;
-            background: #2ecc71;
+            padding: 10px 18px;
             border: none;
             color: white;
             font-weight: bold;
             border-radius: 6px;
             cursor: pointer;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+        .btn-add { background: #2ecc71; }
+        .btn-add:hover { background: #27ae60; }
+        .btn-cancel { background: #7f8c8d; display: none; }
+        .btn-cancel:hover { background: #95a5a6; }
+
+        /* TABEL LIST KENDARAAN */
+        table {
+            width: 100%;
+            border-collapse: collapse;
             margin-top: 10px;
         }
-        button:hover { background: #27ae60; }
-        .output-box {
-            margin-top: 20px;
-            padding: 10px;
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #2a2a2a;
+            font-size: 13px;
+        }
+        th {
+            background: #252525;
+            color: #888;
+            font-weight: 600;
+        }
+        tr:hover { background: #242424; }
+        .plate-badge {
+            background: #f1c40f;
+            color: #000;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+        .action-btn {
+            padding: 6px 10px;
+            font-size: 11px;
+        }
+        .btn-edit { background: #3498db; }
+        .btn-edit:hover { background: #2980b9; }
+        .btn-delete { background: #e74c3c; }
+        .btn-delete:hover { background: #c0392b; }
+        .btn-link { background: #9b59b6; }
+        .btn-link:hover { background: #8e44ad; }
+
+        /* MODAL OUT PUT LINK */
+        .link-output {
+            margin-top: 15px;
+            padding: 12px;
             background: #111;
             border-radius: 6px;
+            border: 1px dashed #444;
+            display: none;
             word-break: break-all;
             font-size: 12px;
-            border: 1px dashed #555;
         }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <h2>Input Kendaraan HUD</h2>
-    
-    <div class="form-group">
-        <label>Model / Nama Truk</label>
-        <input type="text" id="truckModel" placeholder="Contoh: DAF XF 105">
+<div class="container">
+    <!-- FORM INPUT / EDIT -->
+    <div class="card">
+        <h2 id="formTitle"><i class="fa-solid fa-truck-front"></i> Tambah Kendaraan Baru</h2>
+        
+        <input type="hidden" id="editIndex" value="-1">
+        
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Nama Kendaraan</label>
+                <input type="text" id="vehicleName" placeholder="Contoh: DAF XF 105">
+            </div>
+            <div class="form-group">
+                <label>VID (Vehicle ID)</label>
+                <input type="text" id="vehicleID" placeholder="Contoh: TRK-001">
+            </div>
+            <div class="form-group">
+                <label>Plat Nomor</label>
+                <input type="text" id="vehiclePlate" placeholder="Contoh: B 1234 ABC">
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn-add" id="btnSave" onclick="saveVehicle()"><i class="fa-solid fa-plus"></i> Simpan Kendaraan</button>
+            <button class="btn-cancel" id="btnCancel" onclick="resetForm()"><i class="fa-solid fa-xmark"></i> Batal</button>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label>Kapasitas Tangki Maksimal (Liter)</label>
-        <input type="number" id="maxFuel" placeholder="Contoh: 800">
-    </div>
+    <!-- LIST KENDARAAN -->
+    <div class="card">
+        <h2><i class="fa-solid fa-list"></i> Daftar Kendaraan Terdaftar</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama Kendaraan</th>
+                    <th>VID</th>
+                    <th>Plat Nomor</th>
+                    <th style="text-align: center;">Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="vehicleTableBody">
+                <!-- Data dimasukkan via Javascript -->
+            </tbody>
+        </table>
 
-    <button onclick="generateLink()">Generate Config / Link HUD</button>
-
-    <div class="output-box" id="resultBox" style="display:none;">
-        <strong>Link HUD Game:</strong>
-        <p id="hudUrl" style="color: #2ecc71;"></p>
-        <strong>JSON Data (Untuk Lua FiveM):</strong>
-        <pre id="jsonResult" style="color: #f1c40f; white-space: pre-wrap;"></pre>
+        <div class="link-output" id="linkBox">
+            <strong>Link HUD Game:</strong>
+            <p id="generatedUrl" style="color: #2ecc71; margin-top: 5px;"></p>
+        </div>
     </div>
 </div>
 
 <script>
-function generateLink() {
-    const model = document.getElementById('truckModel').value || 'DAF XF';
-    const fuel = document.getElementById('maxFuel').value || '800';
+    let vehicles = JSON.parse(localStorage.getItem('hud_vehicles')) || [];
 
-    // Base URL dari GitHub Pages
-    const baseUrl = window.location.href.replace('dashboard.html', 'index.html');
-    const fullUrl = `${baseUrl}?model=${encodeURIComponent(model)}&maxfuel=${fuel}`;
+    function renderTable() {
+        const tbody = document.getElementById('vehicleTableBody');
+        tbody.innerHTML = '';
 
-    document.getElementById('resultBox').style.display = 'block';
-    document.getElementById('hudUrl').innerText = fullUrl;
-    document.getElementById('jsonResult').innerText = JSON.stringify({
-        model: model,
-        maxFuel: parseInt(fuel)
-    }, null, 2);
-}
+        if (vehicles.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#666;">Belum ada kendaraan yang ditambahkan.</td></tr>`;
+            return;
+        }
+
+        vehicles.forEach((v, index) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${v.name}</strong></td>
+                <td><code>${v.vid}</code></td>
+                <td><span class="plate-badge">${v.plate}</span></td>
+                <td style="text-align: center;">
+                    <div style="display: flex; gap: 5px; justify-content: center;">
+                        <button class="action-btn btn-link" onclick="getHUDLink(${index})" title="Ambil Link HUD"><i class="fa-solid fa-link"></i> Link</button>
+                        <button class="action-btn btn-edit" onclick="editVehicle(${index})" title="Edit"><i class="fa-solid fa-pen"></i></button>
+                        <button class="action-btn btn-delete" onclick="deleteVehicle(${index})" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function saveVehicle() {
+        const name = document.getElementById('vehicleName').value.trim();
+        const vid = document.getElementById('vehicleID').value.trim();
+        const plate = document.getElementById('vehiclePlate').value.trim();
+        const editIndex = parseInt(document.getElementById('editIndex').value);
+
+        if (!name || !vid || !plate) {
+            alert('Semua kolom wajib diisi!');
+            return;
+        }
+
+        const vehicleData = { name, vid, plate };
+
+        if (editIndex === -1) {
+            vehicles.push(vehicleData);
+        } else {
+            vehicles[editIndex] = vehicleData;
+        }
+
+        localStorage.setItem('hud_vehicles', JSON.stringify(vehicles));
+        resetForm();
+        renderTable();
+    }
+
+    function editVehicle(index) {
+        const v = vehicles[index];
+        document.getElementById('vehicleName').value = v.name;
+        document.getElementById('vehicleID').value = v.vid;
+        document.getElementById('vehiclePlate').value = v.plate;
+        document.getElementById('editIndex').value = index;
+
+        document.getElementById('formTitle').innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Edit Kendaraan';
+        document.getElementById('btnSave').innerHTML = '<i class="fa-solid fa-check"></i> Update Kendaraan';
+        document.getElementById('btnCancel').style.display = 'inline-flex';
+    }
+
+    function deleteVehicle(index) {
+        if (confirm('Yakin ingin menghapus kendaraan ini?')) {
+            vehicles.splice(index, 1);
+            localStorage.setItem('hud_vehicles', JSON.stringify(vehicles));
+            renderTable();
+            document.getElementById('linkBox').style.display = 'none';
+        }
+    }
+
+    function resetForm() {
+        document.getElementById('vehicleName').value = '';
+        document.getElementById('vehicleID').value = '';
+        document.getElementById('vehiclePlate').value = '';
+        document.getElementById('editIndex').value = '-1';
+
+        document.getElementById('formTitle').innerHTML = '<i class="fa-solid fa-truck-front"></i> Tambah Kendaraan Baru';
+        document.getElementById('btnSave').innerHTML = '<i class="fa-solid fa-plus"></i> Simpan Kendaraan';
+        document.getElementById('btnCancel').style.display = 'none';
+    }
+
+    function getHUDLink(index) {
+        const v = vehicles[index];
+        const baseUrl = window.location.href.replace('dashboard.html', 'index.html');
+        const fullUrl = `${baseUrl}?name=${encodeURIComponent(v.name)}&vid=${encodeURIComponent(v.vid)}&plate=${encodeURIComponent(v.plate)}`;
+        
+        document.getElementById('linkBox').style.display = 'block';
+        document.getElementById('generatedUrl').innerText = fullUrl;
+    }
+
+    // Inisialisasi awal
+    renderTable();
 </script>
 
 </body>
