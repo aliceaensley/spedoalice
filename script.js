@@ -17,10 +17,11 @@ function loadConfigFromURL() {
 }
 
 function setEngine(state) {
-    elements.engine.innerText = onOrOff(state);
+    if (elements.engine) elements.engine.innerText = onOrOff(state);
 }
 
 function setSpeed(speed) {
+    if (!elements.speed) return;
     switch(speedMode) {
         case 1: elements.speed.innerText = `${Math.round(speed * 2.236936)} MPH`; break;
         case 2: elements.speed.innerText = `${Math.round(speed * 1.943844)} Knots`; break;
@@ -28,23 +29,41 @@ function setSpeed(speed) {
     }
 }
 
+// SISTEM RPM YANG DIPERBAIKI
 function setRPM(rpm) {
-    elements.rpm.innerText = `${rpm.toFixed(0)} RPM`;
+    if (!elements.rpm) return;
+    const val = Math.round(rpm);
+    elements.rpm.innerText = `${val} RPM`;
+
+    // Berubah warna merah/redline jika RPM tinggi (misal di atas 2500)
+    if (val >= 2500) {
+        elements.rpm.classList.add('rpm-high');
+    } else {
+        elements.rpm.classList.remove('rpm-high');
+    }
 }
 
 function setFuel(fuelPercent) {
-    elements.fuel.innerText = `${Math.round(fuelPercent * 100)}%/100%`;
+    if (elements.fuel) elements.fuel.innerText = `${Math.round(fuelPercent * 100)}%/100%`;
 }
 
 function setHealth(health) {
-    elements.health.innerText = `${Math.round(health * 100)}%/100%`;
+    if (elements.health) elements.health.innerText = `${Math.round(health * 100)}%/100%`;
 }
 
 function setGear(gear) {
-    elements.gear.innerText = String(gear);
+    if (!elements.gear) return;
+    if (gear === 0) {
+        elements.gear.innerText = 'N';
+    } else if (gear === -1) {
+        elements.gear.innerText = 'R';
+    } else {
+        elements.gear.innerText = String(gear);
+    }
 }
 
 function setHeadlights(state) {
+    if (!elements.headlights) return;
     switch(state) {
         case 1: elements.headlights.innerText = 'On'; break;
         case 2: elements.headlights.innerText = 'High Beam'; break;
@@ -54,20 +73,24 @@ function setHeadlights(state) {
 
 function setLeftIndicator(state) {
     indicators = (indicators & 0b10) | (state ? 0b01 : 0b00);
-    elements.indicators.innerText = `${indicators & 0b01 ? 'On' : 'Off'} / ${indicators & 0b10 ? 'On' : 'Off'}`;
+    if (elements.indicators) {
+        elements.indicators.innerText = `${indicators & 0b01 ? 'On' : 'Off'} / ${indicators & 0b10 ? 'On' : 'Off'}`;
+    }
 }
 
 function setRightIndicator(state) {
     indicators = (indicators & 0b01) | (state ? 0b10 : 0b00);
-    elements.indicators.innerText = `${indicators & 0b01 ? 'On' : 'Off'} / ${indicators & 0b10 ? 'On' : 'Off'}`;
+    if (elements.indicators) {
+        elements.indicators.innerText = `${indicators & 0b01 ? 'On' : 'Off'} / ${indicators & 0b10 ? 'On' : 'Off'}`;
+    }
 }
 
 function setSeatbelts(state) {
-    elements.seatbelts.innerText = onOrOff(state);
+    if (elements.seatbelts) elements.seatbelts.innerText = onOrOff(state);
 }
 
 function setOdometer(distance) {
-    elements.odometer.innerText = distance.toFixed(1) + ' Miles';
+    if (elements.odometer) elements.odometer.innerText = distance.toFixed(1) + ' Miles';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -90,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadConfigFromURL();
 });
 
-// Listener Event jika data dikirim dinamis via Lua FiveM
+// Listener Event dari FiveM / NUI
 window.addEventListener('message', (event) => {
     const data = event.data;
     if (data.type === "updateHUD") {
