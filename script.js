@@ -1,22 +1,19 @@
 let elements = {};
 let speedMode = 1;
 let indicators = 0;
-let maxFuelCapacity = 800; // Default
 
 const onOrOff = state => state ? 'On' : 'Off';
 
-// Fungsi membaca parameter dari URL Dashboard
+// Fungsi membaca data (Nama, VID, Plat) dari URL Dashboard
 function loadConfigFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
-    const modelParam = urlParams.get('model');
-    const maxFuelParam = urlParams.get('maxfuel');
+    const nameParam = urlParams.get('name');
+    const vidParam = urlParams.get('vid');
+    const plateParam = urlParams.get('plate');
 
-    if (modelParam && elements.truckModel) {
-        elements.truckModel.innerText = modelParam;
-    }
-    if (maxFuelParam) {
-        maxFuelCapacity = parseInt(maxFuelParam);
-    }
+    if (nameParam && elements.truckModel) elements.truckModel.innerText = nameParam;
+    if (vidParam && elements.truckVid) elements.truckVid.innerText = vidParam;
+    if (plateParam && elements.truckPlate) elements.truckPlate.innerText = plateParam;
 }
 
 function setEngine(state) {
@@ -36,9 +33,7 @@ function setRPM(rpm) {
 }
 
 function setFuel(fuelPercent) {
-    // Menampilkan persentase dan estimasi liter berdasarkan maxFuel dari Dashboard
-    const currentLiters = Math.round((fuelPercent) * maxFuelCapacity);
-    elements.fuel.innerText = `${Math.round(fuelPercent * 100)}%/100% (${currentLiters}L)`;
+    elements.fuel.innerText = `${Math.round(fuelPercent * 100)}%/100%`;
 }
 
 function setHealth(health) {
@@ -75,7 +70,6 @@ function setOdometer(distance) {
     elements.odometer.innerText = distance.toFixed(1) + ' Miles';
 }
 
-// Inisialisasi Event listener FiveM NUI & Load Parameter URL
 document.addEventListener('DOMContentLoaded', () => {
     elements = {
         engine: document.getElementById('engine'),
@@ -88,18 +82,21 @@ document.addEventListener('DOMContentLoaded', () => {
         indicators: document.getElementById('indicators'),
         seatbelts: document.getElementById('seatbelts'),
         odometer: document.getElementById('odometer'),
-        truckModel: document.getElementById('truck-model')
+        truckModel: document.getElementById('truck-model'),
+        truckVid: document.getElementById('truck-vid'),
+        truckPlate: document.getElementById('truck-plate')
     };
 
-    // Muat konfigurasi dari URL Dashboard
     loadConfigFromURL();
 });
 
-// Listener Event dari FiveM NUI Lua Script
+// Listener Event jika data dikirim dinamis via Lua FiveM
 window.addEventListener('message', (event) => {
     const data = event.data;
     if (data.type === "updateHUD") {
-        if (data.truckModel && elements.truckModel) elements.truckModel.innerText = data.truckModel;
+        if (data.name && elements.truckModel) elements.truckModel.innerText = data.name;
+        if (data.vid && elements.truckVid) elements.truckVid.innerText = data.vid;
+        if (data.plate && elements.truckPlate) elements.truckPlate.innerText = data.plate;
         if (data.speed !== undefined) setSpeed(data.speed);
         if (data.rpm !== undefined) setRPM(data.rpm);
         if (data.fuel !== undefined) setFuel(data.fuel);
