@@ -22,57 +22,60 @@ body {
     transform: translateX(-50%);
     width: 95%;
     max-width: 1200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     z-index: 9999;
 }
 
-/* Panel Kapsul Atas */
+/* Panel Atas Utama (Menggunakan Flexbox) */
 .top-capsule-bar {
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* Dibuat latar belakang gelap hanya untuk bagian kapsul, tetapi di tengahnya dipisah */
-    background: transparent;
+    align-items: stretch; /* Memastikan tinggi semua bagian sama */
+    justify-content: center;
 }
 
-/* Kotak Kiri dan Kanan memiliki latar belakang gelap */
-.bar-section {
+/* Panel Kiri (Latar Belakang Gelap) */
+.left-section {
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 15px;
     background: rgba(0, 0, 0, 0.75);
     border: 1.5px solid rgba(255, 255, 255, 0.4);
-    padding: 8px 20px;
-    backdrop-filter: blur(4px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
-}
-
-.left-section {
+    border-right: none; /* Menghilangkan border kanan agar menyambung ke kotak tengah */
     border-top-left-radius: 25px;
     border-bottom-left-radius: 25px;
-    border-right: none;
+    padding: 8px 18px;
+    backdrop-filter: blur(4px);
+    flex: 1;
+    justify-content: flex-start;
 }
 
-.right-section {
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
-    border-left: none;
-}
-
-/* Kotak Tengah Dibuat Transparan & Diberi Bingkai (Outline) */
+/* KOTAK TENGAH: Transparan Penuh + Bingkai Kotak Tegas */
 .center-spacer-box {
-    width: 200px;
-    height: 42px;
-    background: transparent !important; /* Latar belakang transparan agar HUD game terlihat */
-    border-top: 1.5px solid rgba(255, 255, 255, 0.4);
-    border-bottom: 1.5px solid rgba(255, 255, 255, 0.4);
+    width: 220px; /* Lebar area kotak tengah */
+    min-height: 38px;
+    background: transparent !important; /* Benar-benar transparan */
+    border: 1.5px solid rgba(255, 255, 255, 0.5); /* Garis kotak pembatas penuh */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Shadow halus */
     flex-shrink: 0;
 }
 
-/* Styling Item HUD */
+/* Panel Kanan (Latar Belakang Gelap) */
+.right-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(0, 0, 0, 0.75);
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    border-left: none; /* Menghilangkan border kiri agar menyambung ke kotak tengah */
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    padding: 8px 18px;
+    backdrop-filter: blur(4px);
+    flex: 1;
+    justify-content: flex-end;
+}
+
+/* Styling Item Text & Ikon */
 .hud-item {
     display: flex;
     align-items: center;
