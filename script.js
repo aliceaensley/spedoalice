@@ -1,133 +1,545 @@
 let elements = {};
-let speedMode = 1;
+
+let speedMode = 0;
 let indicators = 0;
 
-const onOrOff = state => state ? 'On' : 'Off';
 
-/**
- * Updates the display of the engine state.
- *
- * @param {boolean} state If true, the engine is on; otherwise, it is off.
- * @description Sets the engine state display based on the provided boolean state.
- */
+/* =========================================================
+   HELPER
+   ========================================================= */
+
+function onOrOff(state) {
+    return state ? "ON" : "OFF";
+}
+
+
+/* =========================================================
+   ENGINE
+   ========================================================= */
+
 function setEngine(state) {
+
+    if (!elements.engine) return;
+
     elements.engine.innerText = onOrOff(state);
+
+    elements.engine.classList.remove(
+        "engine-on",
+        "engine-off"
+    );
+
+    if (state) {
+        elements.engine.classList.add("engine-on");
+    } else {
+        elements.engine.classList.add("engine-off");
+    }
 }
 
-/**
- * Updates the speed display based on the current speed mode.
- * @param {number} speed - The speed value in meters per second (m/s).
- * @description Converts the speed value to the current speed mode and updates the display.
- */
+
+/* =========================================================
+   SPEED
+   ========================================================= */
+
 function setSpeed(speed) {
-    switch(speedMode)
-    {
-        case 1: speed = elements.speed.innerText = `${Math.round(speed * 2.236936)} MPH`; break; // MPH
-        case 2: speed = elements.speed.innerText = `${Math.round(speed * 1.943844)} Knots`; break; // Knots
-        default: speed = elements.speed.innerText = `${Math.round(speed * 3.6)} KMH`; // KMH
+
+    if (!elements.speed) return;
+
+    let convertedSpeed = 0;
+    let unit = "km/h";
+
+    switch (speedMode) {
+
+        // KM/H
+        case 0:
+            convertedSpeed = speed * 3.6;
+            unit = "km/h";
+            break;
+
+        // MPH
+        case 1:
+            convertedSpeed = speed * 2.236936;
+            unit = "mph";
+            break;
+
+        // KNOTS
+        case 2:
+            convertedSpeed = speed * 1.943844;
+            unit = "kn";
+            break;
     }
+
+    elements.speed.innerText =
+        Math.round(convertedSpeed);
+
+    elements.speedUnit.innerText = unit;
 }
 
-/**
- * Updates the RPM (Revolutions Per Minute) display.
- * @param {number} rpm - The RPM value to display. (0 to 1).
- */
+
+/* =========================================================
+   RPM
+   ========================================================= */
+
 function setRPM(rpm) {
-    elements.rpm.innerText = `${rpm.toFixed(4)} RPM`;
+
+    if (!elements.rpm) return;
+
+    /*
+        Template asli menggunakan 0 - 1.
+        Kita tampilkan sebagai RPM yang lebih
+        masuk akal untuk tampilan HUD.
+    */
+
+    let realRPM = rpm;
+
+    if (rpm <= 1) {
+        realRPM = rpm * 8000;
+    }
+
+    elements.rpm.innerText =
+        Math.round(realRPM) + " RPM";
 }
 
-/**
- * Updates the fuel level display as a percentage.
- * @param {number} fuel - The fuel level (0 to 1).
- */
+
+/* =========================================================
+   FUEL
+   ========================================================= */
+
 function setFuel(fuel) {
-    elements.fuel.innerText = `${(fuel * 100).toFixed(1)}%`;
-}
 
-/**
- * Updates the vehicle health display as a percentage.
- * @param {number} health - The vehicle health level (0 to 1).
- */
-function setHealth(health) {
-    elements.health.innerText = `${(health * 100).toFixed(1)}%`;
-}
+    if (!elements.fuel) return;
 
-/**
- * Updates the current gear display.
- * @param {number} gear - The current gear to display. 0 represents neutral/reverse.
- */
-function setGear(gear) {
-    elements.gear.innerText = String(gear);
-}
+    let percentage = fuel * 100;
 
-/**
- * Updates the headlights status display.
- * @param {number} state - The headlight state (0: Off, 1: On, 2: High Beam).
- */
-function setHeadlights(state) {
-    switch(state)
-    {
-        case 1: elements.headlights.innerText = 'On'; break;
-        case 2: elements.headlights.innerText = 'High Beam'; break;
-        default: elements.headlights.innerText = 'Off';
+    elements.fuel.innerText =
+        Math.round(percentage) + "%";
+
+    elements.fuel.classList.remove(
+        "low-fuel",
+        "medium-fuel",
+        "normal-fuel"
+    );
+
+    if (percentage <= 20) {
+
+        elements.fuel.classList.add(
+            "low-fuel"
+        );
+
+    } else if (percentage <= 40) {
+
+        elements.fuel.classList.add(
+            "medium-fuel"
+        );
+
+    } else {
+
+        elements.fuel.classList.add(
+            "normal-fuel"
+        );
     }
 }
 
-/**
- * Sets the state of the left turn indicator and updates the display.
- * @param {boolean} state - If true, turns the left indicator on; otherwise, turns it off.
- */
+
+/* =========================================================
+   HEALTH
+   ========================================================= */
+
+function setHealth(health) {
+
+    /*
+        Health tidak ditampilkan di HUD utama
+        karena desain referensi tidak menggunakan
+        health percentage.
+    */
+
+    return health;
+}
+
+
+/* =========================================================
+   GEAR
+   ========================================================= */
+
+function setGear(gear) {
+
+    if (!elements.gear) return;
+
+    /*
+        GTA/FiveM:
+        0 = Neutral
+        Gear negatif = Reverse
+    */
+
+    if (gear === 0) {
+
+        elements.gear.innerText = "N";
+
+    } else if (gear < 0) {
+
+        elements.gear.innerText = "R" + Math.abs(gear);
+
+    } else {
+
+        elements.gear.innerText = String(gear);
+    }
+}
+
+
+/* =========================================================
+   HEADLIGHT
+   ========================================================= */
+
+function setHeadlights(state) {
+
+    if (!elements.headlights) return;
+
+    switch (state) {
+
+        case 1:
+            elements.headlights.innerText = "▮";
+            break;
+
+        case 2:
+            elements.headlights.innerText = "▮▮";
+            break;
+
+        default:
+            elements.headlights.innerText = "▯";
+            break;
+    }
+}
+
+
+/* =========================================================
+   LEFT INDICATOR
+   ========================================================= */
+
 function setLeftIndicator(state) {
-    indicators = (indicators & 0b10) | (state ? 0b01 : 0b00);
-    elements.indicators.innerText = `${indicators & 0b01 ? 'On' : 'Off'} / ${indicators & 0b10 ? 'On' : 'Off'}`;
+
+    indicators =
+        (indicators & 0b10) |
+        (state ? 0b01 : 0b00);
+
+    updateIndicators();
 }
 
-/**
- * Sets the state of the right turn indicator and updates the display.
- * @param {boolean} state - If true, turns the right indicator on; otherwise, turns it off.
- */
+
+/* =========================================================
+   RIGHT INDICATOR
+   ========================================================= */
+
 function setRightIndicator(state) {
-    indicators = (indicators & 0b01) | (state ? 0b10 : 0b00);
-    elements.indicators.innerText = `${indicators & 0b01 ? 'On' : 'Off'} / ${indicators & 0b10 ? 'On' : 'Off'}`;
+
+    indicators =
+        (indicators & 0b01) |
+        (state ? 0b10 : 0b00);
+
+    updateIndicators();
 }
 
-/**
- * Updates the seatbelt status display.
- * @param {boolean} state - If true, indicates seatbelts are fastened; otherwise, indicates they are not.
- */
+
+/* =========================================================
+   INDICATOR UPDATE
+   ========================================================= */
+
+function updateIndicators() {
+
+    if (!elements.leftIndicator ||
+        !elements.rightIndicator) {
+        return;
+    }
+
+    elements.leftIndicator.classList.toggle(
+        "active",
+        Boolean(indicators & 0b01)
+    );
+
+    elements.rightIndicator.classList.toggle(
+        "active",
+        Boolean(indicators & 0b10)
+    );
+}
+
+
+/* =========================================================
+   SEATBELT
+   ========================================================= */
+
 function setSeatbelts(state) {
-    elements.seatbelts.innerText = onOrOff(state);
+
+    /*
+        Seatbelt tidak ditampilkan sebagai tulisan
+        karena desain referensi menggunakan icon.
+    */
+
+    document.body.classList.toggle(
+        "seatbelt-on",
+        Boolean(state)
+    );
 }
 
-/**
- * Sets the speed display mode and updates the speed unit display.
- * @param {number} mode - The speed mode to set (0: KMH, 1: MPH, 2: Knots).
- */
+
+/* =========================================================
+   SPEED MODE
+   ========================================================= */
+
 function setSpeedMode(mode) {
+
     speedMode = mode;
 }
 
-/**
- * Updates the odometer display.
- * @param {number} distance - The distance in miles.
- */
-function setOdometer(distance)
-{
-    elements.odometer.innerText = distance.toFixed(1) + ' Miles';
+
+/* =========================================================
+   ODOMETER
+   ========================================================= */
+
+function setOdometer(distance) {
+
+    if (!elements.odometer) return;
+
+    /*
+        Distance dari template lama berupa miles.
+        Untuk HUD ini kita tampilkan KM.
+    */
+
+    let kilometers = distance;
+
+    elements.odometer.innerText =
+        kilometers.toLocaleString(
+            "en-US",
+            {
+                maximumFractionDigits: 1
+            }
+        ) + " km";
 }
 
-// Wait for the DOM to be fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-    elements = {
-        engine: document.getElementById('engine'),
-        speed: document.getElementById('speed'),
-        rpm: document.getElementById('rpm'),
-        fuel: document.getElementById('fuel'),
-        health: document.getElementById('health'),
-        gear: document.getElementById('gear'),
-        headlights: document.getElementById('headlights'),
-        indicators: document.getElementById('indicators'),
-        seatbelts: document.getElementById('seatbelts'),
-        odometer: document.getElementById('odometer'),
-    };
-});
+
+/* =========================================================
+   VEHICLE NAME
+   ========================================================= */
+
+function setVehicleName(name) {
+
+    if (!elements.vehicleName) return;
+
+    elements.vehicleName.innerText =
+        name || "Vehicle";
+}
+
+
+/* =========================================================
+   PRESSURE
+   ========================================================= */
+
+function setPressure(pressure) {
+
+    if (!elements.pressure) return;
+
+    elements.pressure.innerText =
+        Math.round(pressure) + " PSI";
+}
+
+
+/* =========================================================
+   CARGO
+   ========================================================= */
+
+function setCargo(current, maximum) {
+
+    if (!elements.cargo) return;
+
+    elements.cargo.innerText =
+        `${current} / ${maximum} L`;
+}
+
+
+/* =========================================================
+   DISTANCE
+   ========================================================= */
+
+function setDistance(distance) {
+
+    if (!elements.distance) return;
+
+    elements.distance.innerText =
+        Number(distance).toLocaleString(
+            "en-US"
+        ) + " km";
+}
+
+
+/* =========================================================
+   CPU
+   ========================================================= */
+
+function setCPU(value) {
+
+    if (!elements.cpu) return;
+
+    elements.cpu.innerText =
+        Math.round(value) + "%";
+}
+
+
+/* =========================================================
+   MEMORY
+   ========================================================= */
+
+function setMemory(value) {
+
+    if (!elements.memory) return;
+
+    elements.memory.innerText =
+        Math.round(value);
+}
+
+
+/* =========================================================
+   GPU
+   ========================================================= */
+
+function setGPU(value) {
+
+    if (!elements.gpu) return;
+
+    elements.gpu.innerText =
+        Math.round(value) + "%";
+}
+
+
+/* =========================================================
+   DOM READY
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        elements = {
+
+            vehicleName:
+                document.getElementById(
+                    "vehicleName"
+                ),
+
+            engine:
+                document.getElementById(
+                    "engine"
+                ),
+
+            speed:
+                document.getElementById(
+                    "speed"
+                ),
+
+            speedUnit:
+                document.getElementById(
+                    "speedUnit"
+                ),
+
+            rpm:
+                document.getElementById(
+                    "rpm"
+                ),
+
+            fuel:
+                document.getElementById(
+                    "fuel"
+                ),
+
+            health:
+                document.getElementById(
+                    "health"
+                ),
+
+            gear:
+                document.getElementById(
+                    "gear"
+                ),
+
+            headlights:
+                document.getElementById(
+                    "headlights"
+                ),
+
+            leftIndicator:
+                document.getElementById(
+                    "leftIndicator"
+                ),
+
+            rightIndicator:
+                document.getElementById(
+                    "rightIndicator"
+                ),
+
+            odometer:
+                document.getElementById(
+                    "odometer"
+                ),
+
+            pressure:
+                document.getElementById(
+                    "pressure"
+                ),
+
+            cargo:
+                document.getElementById(
+                    "cargo"
+                ),
+
+            distance:
+                document.getElementById(
+                    "distance"
+                ),
+
+            cpu:
+                document.getElementById(
+                    "cpu"
+                ),
+
+            memory:
+                document.getElementById(
+                    "memory"
+                ),
+
+            gpu:
+                document.getElementById(
+                    "gpu"
+                )
+        };
+
+
+        /*
+            DEFAULT DISPLAY
+        */
+
+        setVehicleName("DAF XF");
+
+        setEngine(false);
+
+        setSpeed(0);
+
+        setRPM(0);
+
+        setFuel(0.33);
+
+        setGear(-1);
+
+        setHeadlights(0);
+
+        setOdometer(9315);
+
+        setPressure(145);
+
+        setCargo(592, 800);
+
+        setDistance(2091);
+
+        setCPU(35);
+
+        setMemory(29);
+
+        setGPU(83);
+
+    }
+);
