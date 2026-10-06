@@ -34,7 +34,7 @@ html, body {
     position: relative;
     width: 100%;
     height: 38px;
-    background: transparent !important; /* Latar Belakang Transparan Penuh */
+    background: transparent !important;
     border: 1.5px solid rgba(220, 225, 230, 0.6);
     border-radius: 20px;
     display: flex;
@@ -43,13 +43,22 @@ html, body {
     padding: 0 20px;
 }
 
-/* KELOMPOK ITEM ATAS KIRI & KANAN */
+/* KELOMPOK ITEM ATAS KIRI & KANAN (Dibuat Simetris) */
 .top-left-group, .top-right-group {
     display: flex;
     flex-direction: row !important;
     align-items: center;
     gap: 15px;
     z-index: 2;
+    flex: 1;
+}
+
+.top-left-group {
+    justify-content: flex-start;
+}
+
+.top-right-group {
+    justify-content: flex-end;
 }
 
 /* KOTAK TENGAH TRANSPARAN */
@@ -60,7 +69,7 @@ html, body {
     transform: translateX(-50%);
     width: 190px;
     height: 95px;
-    background: transparent !important; /* Latar Belakang Transparan Penuh */
+    background: transparent !important;
     border: 1.5px solid rgba(220, 225, 230, 0.6);
     border-bottom-left-radius: 14px;
     border-bottom-right-radius: 14px;
@@ -81,7 +90,7 @@ html, body {
 /* Sub Bar Bawah Kiri */
 .sub-bar-left {
     height: 26px;
-    background: transparent !important; /* Latar Belakang Transparan Penuh */
+    background: transparent !important;
     border-left: 1.5px solid rgba(220, 225, 230, 0.5);
     border-bottom: 1.5px solid rgba(220, 225, 230, 0.5);
     border-bottom-left-radius: 12px;
@@ -95,7 +104,7 @@ html, body {
 /* Sub Bar Bawah Kanan */
 .sub-bar-right {
     height: 26px;
-    background: transparent !important; /* Latar Belakang Transparan Penuh */
+    background: transparent !important;
     border-right: 1.5px solid rgba(220, 225, 230, 0.5);
     border-bottom: 1.5px solid rgba(220, 225, 230, 0.5);
     border-bottom-right-radius: 12px;
@@ -116,7 +125,7 @@ html, body {
     font-weight: bold;
     color: #ffffff;
     white-space: nowrap;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* Tambahkan bayangan teks agar tetap terbaca jelas */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .hud-item i {
@@ -126,12 +135,6 @@ html, body {
 
 .truck-slot {
     min-width: 40px;
-}
-
-.quote-text {
-    font-style: italic;
-    color: #cccccc;
-    font-weight: normal;
 }
 
 .rpm-item span {
