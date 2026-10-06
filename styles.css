@@ -34,37 +34,41 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(0, 0, 0, 0.55);
-    border: 2px solid rgba(255, 255, 255, 0.4);
-    border-radius: 30px;
-    padding: 8px 25px;
-    backdrop-filter: blur(4px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    /* Dibuat latar belakang gelap hanya untuk bagian kapsul, tetapi di tengahnya dipisah */
+    background: transparent;
 }
 
-/* Bagian Kiri & Kanan dalam Kapsul */
+/* Kotak Kiri dan Kanan memiliki latar belakang gelap */
 .bar-section {
     display: flex;
     align-items: center;
     gap: 18px;
-    flex: 1;
+    background: rgba(0, 0, 0, 0.75);
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    padding: 8px 20px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
 }
 
 .left-section {
-    justify-content: flex-start;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-right: none;
 }
 
 .right-section {
-    justify-content: flex-end;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-left: none;
 }
 
-/* Kotak Tengah Dibuat Transparan & Kosong */
+/* Kotak Tengah Dibuat Transparan & Diberi Bingkai (Outline) */
 .center-spacer-box {
-    width: 220px; /* Menyesuaikan lebar kotak tengah yang kosong */
-    height: 100%;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
+    width: 200px;
+    height: 42px;
+    background: transparent !important; /* Latar belakang transparan agar HUD game terlihat */
+    border-top: 1.5px solid rgba(255, 255, 255, 0.4);
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.4);
     flex-shrink: 0;
 }
 
@@ -86,17 +90,4 @@ body {
 
 .hud-item span {
     color: #ffffff;
-}
-
-/* Panel Bawah Melengkung (Kiri) */
-.bottom-sub-bar {
-    align-self: flex-start;
-    margin-left: 50px;
-    margin-top: 2px;
-    min-width: 250px;
-    height: 25px;
-    background: rgba(0, 0, 0, 0.35);
-    border-left: 2px solid rgba(255, 255, 255, 0.4);
-    border-bottom: 2px solid rgba(255, 255, 255, 0.4);
-    border-bottom-left-radius: 12px;
 }
