@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kendaraan Alice</title>
-    <!-- Icon FontAwesome -->
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css">
-    <link rel="stylesheet" href="styles.css" type="text/css">
+    <title>ETS2 HUD</title>
+    <!-- FontAwesome Icon CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- File CSS Utama -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="hud-container">
         <!-- BARISAN UTAMA (KAPSUL ATAS) -->
         <div class="top-capsule-bar">
-            <!-- Kiri Top Bar -->
+            <!-- Kiri Top Bar (Tersisa Kendaraan & Odometer) -->
             <div class="top-left-group">
                 <div class="hud-item truck-slot">
                     <i class="fa-solid fa-truck"></i>
@@ -21,15 +22,15 @@
                     <span id="truck-plate" class="badge-plate">-</span>
                 </div>
                 <div class="hud-item"><i class="fa-solid fa-road"></i> <span id="odometer">0 Miles</span></div>
-                <div class="hud-item"><i class="fa-solid fa-wrench"></i> <span id="health">0%/100%</span></div>
-                <div class="hud-item"><i class="fa-solid fa-gas-pump"></i> <span id="fuel">0%/100%</span></div>
             </div>
 
             <!-- KOTAK TENGAH TRANSPARAN -->
             <div class="center-speed-box"></div>
 
-            <!-- Kanan Top Bar -->
+            <!-- Kanan Top Bar (Ditambahkan Health & Fuel di sini) -->
             <div class="top-right-group">
+                <div class="hud-item"><i class="fa-solid fa-wrench"></i> <span id="health">0%/100%</span></div>
+                <div class="hud-item"><i class="fa-solid fa-gas-pump"></i> <span id="fuel">0%/100%</span></div>
                 <div class="hud-item"><i class="fa-solid fa-gear"></i> Gear: <span id="gear">N</span></div>
                 <div class="hud-item"><i class="fa-solid fa-power-off"></i> <span id="engine">Off</span></div>
                 <div class="hud-item"><i class="fa-solid fa-lightbulb"></i> <span id="headlights">Off</span></div>
