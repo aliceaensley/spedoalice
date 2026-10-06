@@ -1,147 +1,20 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    width: 100vw;
-    height: 100vh;
-    background: transparent !important;
-    background-color: rgba(0, 0, 0, 0) !important;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #ffffff;
-    font-size: 11px;
-    overflow: hidden;
-    user-select: none;
-    -webkit-user-drag: none;
+/* Badge tambahan untuk VID dan Plat Nomor di HUD */
+.badge-vid {
+    font-size: 10px;
+    color: #3498db;
+    background: rgba(52, 152, 219, 0.2);
+    padding: 1px 5px;
+    border-radius: 3px;
+    border: 1px solid rgba(52, 152, 219, 0.4);
+    margin-left: 4px;
 }
 
-* {
-    box-sizing: border-box;
-    background: transparent;
-}
-
-/* Container Utama HUD */
-.hud-container {
-    position: absolute;
-    top: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 95%;
-    max-width: 980px;
-    display: flex;
-    flex-direction: column;
-    z-index: 9999;
-    background: transparent !important;
-}
-
-/* KAPSUL ATAS UTAMA */
-.top-capsule-bar {
-    position: relative;
-    width: 100%;
-    height: 38px;
-    background: transparent !important;
-    border: 1.5px solid rgba(220, 225, 230, 0.6);
-    border-radius: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-}
-
-/* KELOMPOK ITEM ATAS KIRI & KANAN */
-.top-left-group, .top-right-group {
-    display: flex;
-    flex-direction: row !important;
-    align-items: center;
-    gap: 15px;
-    z-index: 2;
-    flex: 1;
-    background: transparent !important;
-}
-
-.top-left-group {
-    justify-content: flex-start;
-}
-
-.top-right-group {
-    justify-content: flex-end;
-}
-
-/* KOTAK TENGAH TRANSPARAN */
-.center-speed-box {
-    position: absolute;
-    top: -1.5px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 190px;
-    height: 95px;
-    background: transparent !important;
-    border: 1.5px solid rgba(220, 225, 230, 0.6);
-    border-bottom-left-radius: 14px;
-    border-bottom-right-radius: 14px;
-    z-index: 10;
-}
-
-/* KONTEN SUB BAR BAWAH */
-.bottom-bars-wrapper {
-    display: flex;
-    flex-direction: row !important;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 3px;
-    padding-left: 50px;
-    padding-right: 50px;
-    background: transparent !important;
-}
-
-/* Sub Bar Bawah Kiri */
-.sub-bar-left {
-    height: 26px;
-    background: transparent !important;
-    border-left: 1.5px solid rgba(220, 225, 230, 0.5);
-    border-bottom: 1.5px solid rgba(220, 225, 230, 0.5);
-    border-bottom-left-radius: 12px;
-    padding: 0 12px;
-    display: flex;
-    flex-direction: row !important;
-    align-items: center;
-    gap: 12px;
-}
-
-/* Sub Bar Bawah Kanan */
-.sub-bar-right {
-    height: 26px;
-    background: transparent !important;
-    border-right: 1.5px solid rgba(220, 225, 230, 0.5);
-    border-bottom: 1.5px solid rgba(220, 225, 230, 0.5);
-    border-bottom-right-radius: 12px;
-    padding: 0 12px;
-    display: flex;
-    flex-direction: row !important;
-    align-items: center;
-    gap: 12px;
-}
-
-/* STYLING TEKS & IKON */
-.hud-item {
-    display: flex;
-    flex-direction: row !important;
-    align-items: center;
-    gap: 5px;
-    font-size: 11px;
+.badge-plate {
+    font-size: 10px;
+    color: #000000;
+    background: #f1c40f;
+    padding: 1px 5px;
+    border-radius: 3px;
     font-weight: bold;
-    color: #ffffff;
-    white-space: nowrap;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9); /* Drop shadow hitam agar teks tetap jelas tanpa background */
-}
-
-.hud-item i {
-    color: #e0e0e0;
-    font-size: 12px;
-}
-
-.truck-slot {
-    min-width: 40px;
-}
-
-.rpm-item span {
-    color: #2ecc71;
+    margin-left: 4px;
 }
