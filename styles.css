@@ -18,10 +18,10 @@ html, body {
     background: transparent;
 }
 
-/* Container Utama HUD */
+/* Container Utama HUD (Dinaikkan posisinya ke top: 5px) */
 .hud-container {
     position: absolute;
-    top: 15px;
+    top: 5px;
     left: 50%;
     transform: translateX(-50%);
     width: 95%;
@@ -65,14 +65,14 @@ html, body {
     justify-content: flex-end;
 }
 
-/* KOTAK TENGAH TRANSPARAN */
+/* KOTAK TENGAH TRANSPARAN FULL (Tanpa garis pemisah horizontal) */
 .center-speed-box {
     position: absolute;
     top: -1.5px;
     left: 50%;
     transform: translateX(-50%);
     width: 190px;
-    height: 95px;
+    height: 125px; /* Bikin kotak menyatu full sampai ke bawah */
     background: transparent !important;
     border: 1.5px solid rgba(220, 225, 230, 0.6);
     border-bottom-left-radius: 14px;
