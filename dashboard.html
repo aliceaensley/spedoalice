@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETS2 HUD Dashboard Admin</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: #1e1e1e;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            width: 400px;
+        }
+        h2 { margin-top: 0; color: #3498db; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-size: 13px; }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #333;
+            background: #2b2b2b;
+            color: #fff;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2ecc71;
+            border: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover { background: #27ae60; }
+        .output-box {
+            margin-top: 20px;
+            padding: 10px;
+            background: #111;
+            border-radius: 6px;
+            word-break: break-all;
+            font-size: 12px;
+            border: 1px dashed #555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Input Kendaraan HUD</h2>
+    
+    <div class="form-group">
+        <label>Model / Nama Truk</label>
+        <input type="text" id="truckModel" placeholder="Contoh: DAF XF 105">
+    </div>
+
+    <div class="form-group">
+        <label>Kapasitas Tangki Maksimal (Liter)</label>
+        <input type="number" id="maxFuel" placeholder="Contoh: 800">
+    </div>
+
+    <button onclick="generateLink()">Generate Config / Link HUD</button>
+
+    <div class="output-box" id="resultBox" style="display:none;">
+        <strong>Link HUD Game:</strong>
+        <p id="hudUrl" style="color: #2ecc71;"></p>
+        <strong>JSON Data (Untuk Lua FiveM):</strong>
+        <pre id="jsonResult" style="color: #f1c40f; white-space: pre-wrap;"></pre>
+    </div>
+</div>
+
+<script>
+function generateLink() {
+    const model = document.getElementById('truckModel').value || 'DAF XF';
+    const fuel = document.getElementById('maxFuel').value || '800';
+
+    // Base URL dari GitHub Pages
+    const baseUrl = window.location.href.replace('dashboard.html', 'index.html');
+    const fullUrl = `${baseUrl}?model=${encodeURIComponent(model)}&maxfuel=${fuel}`;
+
+    document.getElementById('resultBox').style.display = 'block';
+    document.getElementById('hudUrl').innerText = fullUrl;
+    document.getElementById('jsonResult').innerText = JSON.stringify({
+        model: model,
+        maxFuel: parseInt(fuel)
+    }, null, 2);
+}
+</script>
+
+</body>
+</html>
