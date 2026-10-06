@@ -29,20 +29,30 @@ function setSpeed(speed) {
     }
 }
 
-// SISTEM RPM
+// SISTEM RPM DENGAN AUTO-CONVERT & DYNAMICAL REDLINE
 function setRPM(rpm) {
     if (!elements.rpm) return;
-    const val = Math.round(rpm);
+    
+    let realRpm = rpm;
+
+    // Jika game mengoperkan data rasio desimal (0.00 - 1.00)
+    // Otomatis dikalikan ke estimasi RPM kendaraan (max 8000 RPM)
+    if (rpm <= 1.0) {
+        realRpm = rpm * 8000; 
+    }
+
+    const val = Math.round(realRpm);
     elements.rpm.innerText = `${val} RPM`;
 
-    if (val >= 2500) {
+    // Indikator Merah / Redline jika di atas 5500 RPM
+    if (val >= 5500) {
         elements.rpm.classList.add('rpm-high');
     } else {
         elements.rpm.classList.remove('rpm-high');
     }
 }
 
-// FUEL DENGAN KOMA (DESIMAL)
+// FUEL DENGAN DESIMAL (KOMA)
 function setFuel(fuelPercent) {
     if (elements.fuel) {
         const val = (fuelPercent * 100).toFixed(1).replace('.', ',');
@@ -50,7 +60,7 @@ function setFuel(fuelPercent) {
     }
 }
 
-// HEALTH DENGAN KOMA (DESIMAL)
+// HEALTH DENGAN DESIMAL (KOMA)
 function setHealth(health) {
     if (elements.health) {
         const val = (health * 100).toFixed(1).replace('.', ',');
