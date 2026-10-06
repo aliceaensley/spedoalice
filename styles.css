@@ -27,7 +27,7 @@ body {
     z-index: 9999;
 }
 
-/* Barisan Atas Capsul Kapsul Transparan */
+/* Barisan Atas Kapsul Transparan */
 .top-bar {
     width: 100%;
     background: rgba(20, 25, 30, 0.75);
@@ -72,45 +72,10 @@ body {
     color: #fff;
 }
 
-/* Kotak Kecepatan Utama di Tengah */
+/* Kotak Tengah Transparan Kosong */
 .speed-box {
-    position: relative;
-    margin-top: 5px;
-    background: rgba(25, 30, 35, 0.85);
-    border: 1.5px solid rgba(255, 255, 255, 0.25);
-    border-radius: 12px;
-    padding: 8px 30px;
-    text-align: center;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
-    min-width: 220px;
-}
-
-.gear-icon {
-    position: absolute;
-    top: 6px;
-    left: 10px;
-    font-size: 12px;
-    color: #aaa;
-}
-
-.speed-value {
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: #ffffff;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-}
-
-.gear-and-rpm {
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
-    margin-top: 2px;
-    font-size: 12px;
-    color: #4cd137; /* Warna hijau khas RPM ETS2 */
-}
-
-.gear-label {
-    color: #00a8ff;
-    font-weight: bold;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    min-height: 50px; /* Menjaga jarak jika diperlukan */
 }
