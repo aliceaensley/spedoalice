@@ -1,118 +1,81 @@
 let elements = {};
 let speedMode = 1;
 let indicators = 0;
+let maxFuelCapacity = 800; // Default
 
 const onOrOff = state => state ? 'On' : 'Off';
 
-/**
- * Updates the display of the engine state.
- * @param {boolean} state If true, the engine is on; otherwise, it is off.
- */
+// Fungsi membaca parameter dari URL Dashboard
+function loadConfigFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const modelParam = urlParams.get('model');
+    const maxFuelParam = urlParams.get('maxfuel');
+
+    if (modelParam && elements.truckModel) {
+        elements.truckModel.innerText = modelParam;
+    }
+    if (maxFuelParam) {
+        maxFuelCapacity = parseInt(maxFuelParam);
+    }
+}
+
 function setEngine(state) {
     elements.engine.innerText = onOrOff(state);
 }
 
-/**
- * Updates the speed display based on the current speed mode.
- * @param {number} speed - The speed value in meters per second (m/s).
- */
 function setSpeed(speed) {
-    switch(speedMode)
-    {
-        case 1: elements.speed.innerText = `${Math.round(speed * 2.236936)} MPH`; break; // MPH
-        case 2: elements.speed.innerText = `${Math.round(speed * 1.943844)} Knots`; break; // Knots
-        default: elements.speed.innerText = `${Math.round(speed * 3.6)} KMH`; // KMH
+    switch(speedMode) {
+        case 1: elements.speed.innerText = `${Math.round(speed * 2.236936)} MPH`; break;
+        case 2: elements.speed.innerText = `${Math.round(speed * 1.943844)} Knots`; break;
+        default: elements.speed.innerText = `${Math.round(speed * 3.6)} KMH`;
     }
 }
 
-/**
- * Updates the RPM (Revolutions Per Minute) display.
- * @param {number} rpm - The RPM value to display. (0 to 1).
- */
 function setRPM(rpm) {
-    elements.rpm.innerText = `${rpm.toFixed(4)} RPM`;
+    elements.rpm.innerText = `${rpm.toFixed(0)} RPM`;
 }
 
-/**
- * Updates the fuel level display as a percentage.
- * @param {number} fuel - The fuel level (0 to 1).
- */
-function setFuel(fuel) {
-    elements.fuel.innerText = `${(fuel * 100).toFixed(1)}%`;
+function setFuel(fuelPercent) {
+    // Menampilkan persentase dan estimasi liter berdasarkan maxFuel dari Dashboard
+    const currentLiters = Math.round((fuelPercent) * maxFuelCapacity);
+    elements.fuel.innerText = `${Math.round(fuelPercent * 100)}%/100% (${currentLiters}L)`;
 }
 
-/**
- * Updates the vehicle health display as a percentage.
- * @param {number} health - The vehicle health level (0 to 1).
- */
 function setHealth(health) {
-    elements.health.innerText = `${(health * 100).toFixed(1)}%`;
+    elements.health.innerText = `${Math.round(health * 100)}%/100%`;
 }
 
-/**
- * Updates the current gear display.
- * @param {number} gear - The current gear to display. 0 represents neutral/reverse.
- */
 function setGear(gear) {
     elements.gear.innerText = String(gear);
 }
 
-/**
- * Updates the headlights status display.
- * @param {number} state - The headlight state (0: Off, 1: On, 2: High Beam).
- */
 function setHeadlights(state) {
-    switch(state)
-    {
+    switch(state) {
         case 1: elements.headlights.innerText = 'On'; break;
         case 2: elements.headlights.innerText = 'High Beam'; break;
         default: elements.headlights.innerText = 'Off';
     }
 }
 
-/**
- * Sets the state of the left turn indicator and updates the display.
- * @param {boolean} state - If true, turns the left indicator on; otherwise, turns it off.
- */
 function setLeftIndicator(state) {
     indicators = (indicators & 0b10) | (state ? 0b01 : 0b00);
     elements.indicators.innerText = `${indicators & 0b01 ? 'On' : 'Off'} / ${indicators & 0b10 ? 'On' : 'Off'}`;
 }
 
-/**
- * Sets the state of the right turn indicator and updates the display.
- * @param {boolean} state - If true, turns the right indicator on; otherwise, turns it off.
- */
 function setRightIndicator(state) {
     indicators = (indicators & 0b01) | (state ? 0b10 : 0b00);
     elements.indicators.innerText = `${indicators & 0b01 ? 'On' : 'Off'} / ${indicators & 0b10 ? 'On' : 'Off'}`;
 }
 
-/**
- * Updates the seatbelt status display.
- * @param {boolean} state - If true, indicates seatbelts are fastened; otherwise, indicates they are not.
- */
 function setSeatbelts(state) {
     elements.seatbelts.innerText = onOrOff(state);
 }
 
-/**
- * Sets the speed display mode and updates the speed unit display.
- * @param {number} mode - The speed mode to set (0: KMH, 1: MPH, 2: Knots).
- */
-function setSpeedMode(mode) {
-    speedMode = mode;
-}
-
-/**
- * Updates the odometer display.
- * @param {number} distance - The distance in miles.
- */
 function setOdometer(distance) {
     elements.odometer.innerText = distance.toFixed(1) + ' Miles';
 }
 
-// Wait for the DOM to be fully loaded
+// Inisialisasi Event listener FiveM NUI & Load Parameter URL
 document.addEventListener('DOMContentLoaded', () => {
     elements = {
         engine: document.getElementById('engine'),
@@ -125,5 +88,24 @@ document.addEventListener('DOMContentLoaded', () => {
         indicators: document.getElementById('indicators'),
         seatbelts: document.getElementById('seatbelts'),
         odometer: document.getElementById('odometer'),
+        truckModel: document.getElementById('truck-model')
     };
+
+    // Muat konfigurasi dari URL Dashboard
+    loadConfigFromURL();
+});
+
+// Listener Event dari FiveM NUI Lua Script
+window.addEventListener('message', (event) => {
+    const data = event.data;
+    if (data.type === "updateHUD") {
+        if (data.truckModel && elements.truckModel) elements.truckModel.innerText = data.truckModel;
+        if (data.speed !== undefined) setSpeed(data.speed);
+        if (data.rpm !== undefined) setRPM(data.rpm);
+        if (data.fuel !== undefined) setFuel(data.fuel);
+        if (data.health !== undefined) setHealth(data.health);
+        if (data.gear !== undefined) setGear(data.gear);
+        if (data.engine !== undefined) setEngine(data.engine);
+        if (data.odometer !== undefined) setOdometer(data.odometer);
+    }
 });
