@@ -1,6 +1,8 @@
 // Data kendaraan lokal
 let vehicles = [
     { name: "Sandstrom", vid: "57761", plate: "VL94FY3P", health: 81.5, fuel: 87.6 }
+    { name: "CHIEF-5", vid: "30645", plate: "6IBE737C", health: 81.5, fuel: 87.6 }
+    { name: "Phantom Custom", vid: "-", plate: "VYZXMZUF", health: 81.5, fuel: 87.6 }
 ];
 
 function renderVehicleList() {
