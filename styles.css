@@ -7,7 +7,7 @@ html, body {
     background-color: rgba(0, 0, 0, 0) !important;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #ffffff;
-    font-size: 11px;
+    font-size: 14px; /* Ukuran dasar naik */
     overflow: hidden;
     user-select: none;
     -webkit-user-drag: none;
@@ -18,40 +18,40 @@ html, body {
     background: transparent;
 }
 
-/* Container Utama HUD */
+/* Container Utama HUD (Diperlebar dari 980px ke 1150px) */
 .hud-container {
     position: absolute;
     top: 5px;
     left: 50%;
     transform: translateX(-50%);
-    width: 95%;
-    max-width: 980px;
+    width: 98%;
+    max-width: 1150px;
     display: flex;
     flex-direction: column;
     z-index: 9999;
     background: transparent !important;
 }
 
-/* KAPSUL ATAS UTAMA (Garis Tepi Pink & Tengah Dipotong) */
+/* KAPSUL ATAS UTAMA (Tinggi & Ukuran Diperbesar) */
 .top-capsule-bar {
     position: relative;
     width: 100%;
-    height: 38px;
+    height: 48px; /* Lebih tinggi */
     background: transparent !important;
-    border: 1.5px solid #ff69b4; /* Warna Garis Pink */
-    border-radius: 20px;
+    border: 2px solid #ff69b4; /* Garis sedikit lebih tebal */
+    border-radius: 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 24px;
     clip-path: polygon(
         0% 0%, 
         100% 0%, 
         100% 100%, 
-        calc(50% + 95px) 100%, 
-        calc(50% + 95px) 0%, 
-        calc(50% - 95px) 0%, 
-        calc(50% - 95px) 100%, 
+        calc(50% + 105px) 100%, 
+        calc(50% + 105px) 0%, 
+        calc(50% - 105px) 0%, 
+        calc(50% - 105px) 100%, 
         0% 100%
     );
 }
@@ -61,7 +61,7 @@ html, body {
     display: flex;
     flex-direction: row !important;
     align-items: center;
-    gap: 15px;
+    gap: 18px; /* Jarak antar menu lebih renggang */
     z-index: 2;
     flex: 1;
     background: transparent !important;
@@ -75,18 +75,18 @@ html, body {
     justify-content: flex-end;
 }
 
-/* KOTAK TENGAH TRANSPARAN (Garis Tepi Pink) */
+/* KOTAK TENGAH TRANSPARAN (Diperbesar & Disesuaikan) */
 .center-speed-box {
     position: absolute;
-    top: -1.5px;
+    top: -2px;
     left: 50%;
     transform: translateX(-50%);
-    width: 190px;
-    height: 65px;
+    width: 210px;
+    height: 75px;
     background: transparent !important;
-    border: 1.5px solid #ff69b4; /* Warna Garis Pink */
-    border-bottom-left-radius: 14px;
-    border-bottom-right-radius: 14px;
+    border: 2px solid #ff69b4;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
     z-index: 10;
 }
 
@@ -96,47 +96,47 @@ html, body {
     flex-direction: row !important;
     justify-content: space-between;
     width: 100%;
-    margin-top: 3px;
-    padding-left: 50px;
-    padding-right: 50px;
+    margin-top: 4px;
+    padding-left: 60px;
+    padding-right: 60px;
     background: transparent !important;
 }
 
-/* Sub Bar Bawah Kiri (Garis Tepi Pink) */
+/* Sub Bar Bawah Kiri */
 .sub-bar-left {
-    height: 26px;
+    height: 32px; /* Lebih tinggi */
     background: transparent !important;
-    border-left: 1.5px solid #ff69b4; /* Warna Garis Pink */
-    border-bottom: 1.5px solid #ff69b4; /* Warna Garis Pink */
-    border-bottom-left-radius: 12px;
-    padding: 0 12px;
+    border-left: 2px solid #ff69b4;
+    border-bottom: 2px solid #ff69b4;
+    border-bottom-left-radius: 14px;
+    padding: 0 16px;
     display: flex;
     flex-direction: row !important;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
 }
 
-/* Sub Bar Bawah Kanan (Garis Tepi Pink) */
+/* Sub Bar Bawah Kanan */
 .sub-bar-right {
-    height: 26px;
+    height: 32px;
     background: transparent !important;
-    border-right: 1.5px solid #ff69b4; /* Warna Garis Pink */
-    border-bottom: 1.5px solid #ff69b4; /* Warna Garis Pink */
-    border-bottom-right-radius: 12px;
-    padding: 0 12px;
+    border-right: 2px solid #ff69b4;
+    border-bottom: 2px solid #ff69b4;
+    border-bottom-right-radius: 14px;
+    padding: 0 16px;
     display: flex;
     flex-direction: row !important;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
 }
 
-/* STYLING TEKS & IKON */
+/* STYLING TEKS & IKON (Ukuran Diperbesar) */
 .hud-item {
     display: flex;
     flex-direction: row !important;
     align-items: center;
-    gap: 5px;
-    font-size: 11px;
+    gap: 7px;
+    font-size: 14px; /* Teks jauh lebih besar & jelas */
     font-weight: bold;
     color: #ffffff;
     white-space: nowrap;
@@ -144,12 +144,12 @@ html, body {
 }
 
 .hud-item i {
-    color: #e0e0e0;
-    font-size: 12px;
+    color: #ffffff;
+    font-size: 16px; /* Ikon diperbesar */
 }
 
 .truck-slot {
-    min-width: 40px;
+    min-width: 50px;
 }
 
 .rpm-item span {
@@ -158,21 +158,21 @@ html, body {
 
 /* Badge VID dan Plat Nomor di HUD */
 .badge-vid {
-    font-size: 10px;
+    font-size: 12px;
     color: #ff69b4;
     background: rgba(255, 105, 180, 0.2);
-    padding: 1px 5px;
-    border-radius: 3px;
-    border: 1px solid rgba(255, 105, 180, 0.4);
-    margin-left: 4px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 105, 180, 0.5);
+    margin-left: 6px;
 }
 
 .badge-plate {
-    font-size: 10px;
+    font-size: 12px;
     color: #000000;
     background: #f1c40f;
-    padding: 1px 5px;
-    border-radius: 3px;
+    padding: 2px 7px;
+    border-radius: 4px;
     font-weight: bold;
-    margin-left: 4px;
+    margin-left: 6px;
 }
