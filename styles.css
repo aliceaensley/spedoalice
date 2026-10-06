@@ -18,7 +18,7 @@ html, body {
     background: transparent;
 }
 
-/* Container Utama HUD (Dinaikkan posisinya ke top: 5px) */
+/* Container Utama HUD */
 .hud-container {
     position: absolute;
     top: 5px;
@@ -32,7 +32,7 @@ html, body {
     background: transparent !important;
 }
 
-/* KAPSUL ATAS UTAMA */
+/* KAPSUL ATAS UTAMA (Garis tengahnya sudah dibolongin/dipotong) */
 .top-capsule-bar {
     position: relative;
     width: 100%;
@@ -44,6 +44,16 @@ html, body {
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
+    clip-path: polygon(
+        0% 0%, 
+        100% 0%, 
+        100% 100%, 
+        calc(50% + 95px) 100%, 
+        calc(50% + 95px) 0%, 
+        calc(50% - 95px) 0%, 
+        calc(50% - 95px) 100%, 
+        0% 100%
+    );
 }
 
 /* KELOMPOK ITEM ATAS KIRI & KANAN */
@@ -65,14 +75,14 @@ html, body {
     justify-content: flex-end;
 }
 
-/* KOTAK TENGAH TRANSPARAN FULL (Tanpa garis pemisah horizontal) */
+/* KOTAK TENGAH TRANSPARAN */
 .center-speed-box {
     position: absolute;
     top: -1.5px;
     left: 50%;
     transform: translateX(-50%);
     width: 190px;
-    height: 125px; /* Bikin kotak menyatu full sampai ke bawah */
+    height: 65px;
     background: transparent !important;
     border: 1.5px solid rgba(220, 225, 230, 0.6);
     border-bottom-left-radius: 14px;
