@@ -1,0 +1,152 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #121212 !important;
+    color: #e0e0e0;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card {
+    background: #1e1e1e;
+    padding: 20px 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    border: 1px solid #2a2a2a;
+}
+
+h2 {
+    margin-bottom: 15px;
+    color: #3498db;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+label {
+    font-size: 12px;
+    color: #aaa;
+    font-weight: bold;
+}
+
+input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #333;
+    background: #2b2b2b;
+    color: #fff;
+    font-size: 13px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.btn-group {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 18px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+}
+
+.btn-add { background: #2ecc71; }
+.btn-add:hover { background: #27ae60; }
+.btn-cancel { background: #7f8c8d; display: none; }
+.btn-cancel:hover { background: #95a5a6; }
+
+/* TABEL LIST KENDARAAN */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #2a2a2a;
+    font-size: 13px;
+}
+
+th {
+    background: #252525;
+    color: #888;
+    font-weight: 600;
+}
+
+tr:hover { background: #242424; }
+
+.plate-badge {
+    background: #f1c40f;
+    color: #000;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+}
+
+.action-btn {
+    padding: 6px 10px;
+    font-size: 11px;
+}
+
+.btn-edit { background: #3498db; }
+.btn-edit:hover { background: #2980b9; }
+.btn-delete { background: #e74c3c; }
+.btn-delete:hover { background: #c0392b; }
+.btn-link { background: #9b59b6; }
+.btn-link:hover { background: #8e44ad; }
+
+/* OUTPUT LINK */
+.link-output {
+    margin-top: 15px;
+    padding: 12px;
+    background: #111;
+    border-radius: 6px;
+    border: 1px dashed #444;
+    display: none;
+    word-break: break-all;
+    font-size: 12px;
+}
