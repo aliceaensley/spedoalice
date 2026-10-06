@@ -10,77 +10,82 @@ body {
     background-color: transparent !important;
     font-family: Arial, Helvetica, sans-serif;
     color: #ffffff;
-    font-size: 13px;
+    font-size: 10.5px; /* Disesuaikan untuk resolusi 1440x900 */
     overflow: hidden;
 }
 
-/* Container Utama */
+/* Container Utama di Atas Screen */
 .hud-wrapper {
     position: fixed;
-    top: 15px;
+    top: 8px;
     left: 50%;
     transform: translateX(-50%);
-    width: 95%;
-    max-width: 1200px;
+    width: 96%;
+    max-width: 920px; /* Ukuran lebar maksimum yang pas untuk 1440px */
     z-index: 9999;
 }
 
-/* Panel Atas Utama (Menggunakan Flexbox) */
+/* Baris Utama Kapsul */
 .top-capsule-bar {
     width: 100%;
     display: flex;
-    align-items: stretch; /* Memastikan tinggi semua bagian sama */
+    flex-direction: row !important;
+    align-items: center;
     justify-content: center;
 }
 
-/* Panel Kiri (Latar Belakang Gelap) */
+/* Panel Sisi Kiri */
 .left-section {
     display: flex;
+    flex-direction: row !important;
     align-items: center;
-    gap: 15px;
+    gap: 8px; /* Jarak antar ikon/teks diregangkan sedikit */
     background: rgba(0, 0, 0, 0.75);
     border: 1.5px solid rgba(255, 255, 255, 0.4);
-    border-right: none; /* Menghilangkan border kanan agar menyambung ke kotak tengah */
-    border-top-left-radius: 25px;
-    border-bottom-left-radius: 25px;
-    padding: 8px 18px;
+    border-right: none;
+    border-top-left-radius: 18px;
+    border-bottom-left-radius: 18px;
+    padding: 5px 10px;
     backdrop-filter: blur(4px);
     flex: 1;
     justify-content: flex-start;
+    white-space: nowrap;
 }
 
-/* KOTAK TENGAH: Transparan Penuh + Bingkai Kotak Tegas */
+/* KOTAK TENGAH: Transparan Penuh + Outline */
 .center-spacer-box {
-    width: 220px; /* Lebar area kotak tengah */
-    min-height: 38px;
-    background: transparent !important; /* Benar-benar transparan */
-    border: 1.5px solid rgba(255, 255, 255, 0.5); /* Garis kotak pembatas penuh */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Shadow halus */
+    width: 150px; /* Diturunkan dari 180px agar sisa ruang untuk teks lebih luas */
+    height: 28px;
+    background: transparent !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
     flex-shrink: 0;
 }
 
-/* Panel Kanan (Latar Belakang Gelap) */
+/* Panel Sisi Kanan */
 .right-section {
     display: flex;
+    flex-direction: row !important;
     align-items: center;
-    gap: 15px;
+    gap: 8px;
     background: rgba(0, 0, 0, 0.75);
     border: 1.5px solid rgba(255, 255, 255, 0.4);
-    border-left: none; /* Menghilangkan border kiri agar menyambung ke kotak tengah */
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
-    padding: 8px 18px;
+    border-left: none;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+    padding: 5px 10px;
     backdrop-filter: blur(4px);
     flex: 1;
     justify-content: flex-end;
+    white-space: nowrap;
 }
 
-/* Styling Item Text & Ikon */
+/* Format Item Teks agar Selalu Horizontal */
 .hud-item {
     display: flex;
+    flex-direction: row !important;
     align-items: center;
-    gap: 6px;
-    font-size: 13px;
+    gap: 3px;
+    font-size: 10.5px;
     font-weight: bold;
     color: #e0e0e0;
     white-space: nowrap;
@@ -88,7 +93,7 @@ body {
 
 .hud-item i {
     color: #a0a0a0;
-    font-size: 14px;
+    font-size: 11px;
 }
 
 .hud-item span {
