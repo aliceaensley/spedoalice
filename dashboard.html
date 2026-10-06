@@ -3,161 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Kendaraan HUD</title>
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css">
-    <!-- Panggil CSS khusus dashboard di sini -->
-    <link rel="stylesheet" href="dashboard.css">
+    <title>HUD Dashboard - Status Kendaraan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #ff69b4;
+            border-bottom: 2px solid #ff69b4;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Styling Tabel Kendaraan */
+        .vehicle-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #1e1e1e;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .vehicle-table th {
+            background-color: #ff69b4;
+            color: #000000;
+            text-align: left;
+            padding: 12px 15px;
+            font-size: 14px;
+        }
+
+        .vehicle-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #333333;
+            font-size: 13px;
+        }
+
+        .vehicle-table tr:hover {
+            background-color: #2a2a2a;
+        }
+
+        /* Badge VID & Plat */
+        .badge-vid {
+            color: #ff69b4;
+            background: rgba(255, 105, 180, 0.15);
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid #ff69b4;
+            font-weight: bold;
+        }
+
+        .badge-plate {
+            color: #000;
+            background: #f1c40f;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        /* Progress Bar untuk Bensin & Mesin */
+        .progress-bar-bg {
+            width: 100%;
+            background-color: #333;
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.3s ease;
+        }
+
+        .fill-health { background-color: #2ecc71; }
+        .fill-fuel { background-color: #3498db; }
+        .fill-warning { background-color: #e74c3c; } /* Merah kalau menipis/rusak */
+
+        /* Tombol Generate Link */
+        .btn-link {
+            background: #ff69b4;
+            color: #000;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-link:hover {
+            background: #ff85c1;
+            box-shadow: 0 0 8px rgba(255, 105, 180, 0.6);
+        }
+    </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- FORM INPUT / EDIT -->
-    <div class="card">
-        <h2 id="formTitle"><i class="fa-solid fa-truck-front"></i> Tambah Kendaraan Baru</h2>
-        
-        <input type="hidden" id="editIndex" value="-1">
-        
-        <div class="form-grid">
-            <div class="form-group">
-                <label>Nama Kendaraan</label>
-                <input type="text" id="vehicleName" placeholder="Contoh: DAF XF 105">
-            </div>
-            <div class="form-group">
-                <label>VID (Vehicle ID)</label>
-                <input type="text" id="vehicleID" placeholder="Contoh: TRK-001">
-            </div>
-            <div class="form-group">
-                <label>Plat Nomor</label>
-                <input type="text" id="vehiclePlate" placeholder="Contoh: B 1234 ABC">
-            </div>
-        </div>
+<div class="dashboard-container">
+    <h2><i class="fa-solid fa-gauge-high"></i> Dashboard Monitor Kendaraan</h2>
 
-        <div class="btn-group">
-            <button class="btn-add" id="btnSave" onclick="saveVehicle()"><i class="fa-solid fa-plus"></i> Simpan Kendaraan</button>
-            <button class="btn-cancel" id="btnCancel" onclick="resetForm()"><i class="fa-solid fa-xmark"></i> Batal</button>
-        </div>
-    </div>
-
-    <!-- LIST KENDARAAN -->
-    <div class="card">
-        <h2><i class="fa-solid fa-list"></i> Daftar Kendaraan Terdaftar</h2>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>Nama Kendaraan</th>
-                    <th>VID</th>
-                    <th>Plat Nomor</th>
-                    <th style="text-align: center;">Aksi</th>
-                </tr>
-            </thead>
-            <tbody id="vehicleTableBody">
-            </tbody>
-        </table>
-
-        <div class="link-output" id="linkBox">
-            <strong>Link HUD Game:</strong>
-            <p id="generatedUrl" style="color: #2ecc71; margin-top: 5px;"></p>
-        </div>
-    </div>
+    <table class="vehicle-table">
+        <thead>
+            <tr>
+                <th>Kendaraan</th>
+                <th>VID</th>
+                <th>Plat Nomor</th>
+                <th>Kondisi Mesin (Health)</th>
+                <th>Sisa Bensin (Fuel)</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="vehicle-list">
+            <!-- Data kendaraan akan dimasukkan secara otomatis melalui JavaScript -->
+        </tbody>
+    </table>
 </div>
 
 <script>
-    let vehicles = JSON.parse(localStorage.getItem('hud_vehicles')) || [];
+    // Contoh Data Kendaraan (Bisa kamu tambah/sesuai kebutuhan)
+    const vehicles = [
+        { name: "Sandstrom", vid: "57761", plate: "VL94FY3P", health: 82.5, fuel: 45.0 },
+        { name: "Phantom Custom", vid: "48102", plate: "TRK882PX", health: 95.0, fuel: 88.4 },
+        { name: "Hauler", vid: "12093", plate: "HL109AA", health: 34.0, fuel: 12.5 }, // Contoh bensin/mesin kritikal
+        { name: "Packer", vid: "66421", plate: "PK771ZZ", health: 100.0, fuel: 60.0 }
+    ];
 
-    function renderTable() {
-        const tbody = document.getElementById('vehicleTableBody');
+    function renderVehicleList() {
+        const tbody = document.getElementById('vehicle-list');
         tbody.innerHTML = '';
 
-        if (vehicles.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#666;">Belum ada kendaraan yang ditambahkan.</td></tr>`;
-            return;
-        }
+        vehicles.forEach(v => {
+            // Warna bar mesin (merah jika di bawah 40%)
+            const healthClass = v.health < 40 ? 'fill-warning' : 'fill-health';
+            // Warna bar bensin (merah jika di bawah 20%)
+            const fuelClass = v.fuel < 20 ? 'fill-warning' : 'fill-fuel';
 
-        vehicles.forEach((v, index) => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><strong>${v.name}</strong></td>
-                <td><code>${v.vid}</code></td>
-                <td><span class="plate-badge">${v.plate}</span></td>
-                <td style="text-align: center;">
-                    <div style="display: flex; gap: 5px; justify-content: center;">
-                        <button class="action-btn btn-link" onclick="getHUDLink(${index})" title="Ambil Link HUD"><i class="fa-solid fa-link"></i> Link</button>
-                        <button class="action-btn btn-edit" onclick="editVehicle(${index})" title="Edit"><i class="fa-solid fa-pen"></i></button>
-                        <button class="action-btn btn-delete" onclick="deleteVehicle(${index})" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><strong><i class="fa-solid fa-truck"></i> ${v.name}</strong></td>
+                <td><span class="badge-vid">${v.vid}</span></td>
+                <td><span class="badge-plate">${v.plate}</span></td>
+                <td>
+                    ${v.health.toFixed(1).replace('.', ',')}%
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill ${healthClass}" style="width: ${v.health}%"></div>
                     </div>
                 </td>
+                <td>
+                    ${v.fuel.toFixed(1).replace('.', ',')}%
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill ${fuelClass}" style="width: ${v.fuel}%"></div>
+                    </div>
+                </td>
+                <td>
+                    <button class="btn-link" onclick="copyHudLink('${v.name}', '${v.vid}', '${v.plate}')">
+                        <i class="fa-solid fa-copy"></i> Salin Link
+                    </button>
+                </td>
             `;
-            tbody.appendChild(tr);
+            tbody.appendChild(row);
         });
     }
 
-    function saveVehicle() {
-        const name = document.getElementById('vehicleName').value.trim();
-        const vid = document.getElementById('vehicleID').value.trim();
-        const plate = document.getElementById('vehiclePlate').value.trim();
-        const editIndex = parseInt(document.getElementById('editIndex').value);
-
-        if (!name || !vid || !plate) {
-            alert('Semua kolom wajib diisi!');
-            return;
-        }
-
-        const vehicleData = { name, vid, plate };
-
-        if (editIndex === -1) {
-            vehicles.push(vehicleData);
-        } else {
-            vehicles[editIndex] = vehicleData;
-        }
-
-        localStorage.setItem('hud_vehicles', JSON.stringify(vehicles));
-        resetForm();
-        renderTable();
-    }
-
-    function editVehicle(index) {
-        const v = vehicles[index];
-        document.getElementById('vehicleName').value = v.name;
-        document.getElementById('vehicleID').value = v.vid;
-        document.getElementById('vehiclePlate').value = v.plate;
-        document.getElementById('editIndex').value = index;
-
-        document.getElementById('formTitle').innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Edit Kendaraan';
-        document.getElementById('btnSave').innerHTML = '<i class="fa-solid fa-check"></i> Update Kendaraan';
-        document.getElementById('btnCancel').style.display = 'inline-flex';
-    }
-
-    function deleteVehicle(index) {
-        if (confirm('Yakin ingin menghapus kendaraan ini?')) {
-            vehicles.splice(index, 1);
-            localStorage.setItem('hud_vehicles', JSON.stringify(vehicles));
-            renderTable();
-            document.getElementById('linkBox').style.display = 'none';
-        }
-    }
-
-    function resetForm() {
-        document.getElementById('vehicleName').value = '';
-        document.getElementById('vehicleID').value = '';
-        document.getElementById('vehiclePlate').value = '';
-        document.getElementById('editIndex').value = '-1';
-
-        document.getElementById('formTitle').innerHTML = '<i class="fa-solid fa-truck-front"></i> Tambah Kendaraan Baru';
-        document.getElementById('btnSave').innerHTML = '<i class="fa-solid fa-plus"></i> Simpan Kendaraan';
-        document.getElementById('btnCancel').style.display = 'none';
-    }
-
-    function getHUDLink(index) {
-        const v = vehicles[index];
-        const baseUrl = window.location.href.replace('dashboard.html', 'index.html');
-        const fullUrl = `${baseUrl}?name=${encodeURIComponent(v.name)}&vid=${encodeURIComponent(v.vid)}&plate=${encodeURIComponent(v.plate)}`;
+    function copyHudLink(name, vid, plate) {
+        // Otomatis menambahkan &v=1 agar terhindar dari cache game
+        const generatedUrl = `https://aliceaensley.github.io/spedoalice/index.html?name=${encodeURIComponent(name)}&vid=${vid}&plate=${plate}&v=1`;
         
-        document.getElementById('linkBox').style.display = 'block';
-        document.getElementById('generatedUrl').innerText = fullUrl;
+        navigator.clipboard.writeText(generatedUrl).then(() => {
+            alert(`Link HUD untuk ${name} berhasil disalin!\n\nURL: ${generatedUrl}`);
+        });
     }
 
-    renderTable();
+    document.addEventListener('DOMContentLoaded', renderVehicleList);
 </script>
 
 </body>
