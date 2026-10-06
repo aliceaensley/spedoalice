@@ -7,7 +7,7 @@ html, body {
     background-color: rgba(0, 0, 0, 0) !important;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #ffffff;
-    font-size: 14px; /* Ukuran dasar naik */
+    font-size: 14px;
     overflow: hidden;
     user-select: none;
     -webkit-user-drag: none;
@@ -18,7 +18,7 @@ html, body {
     background: transparent;
 }
 
-/* Container Utama HUD (Diperlebar dari 980px ke 1150px) */
+/* Container Utama HUD */
 .hud-container {
     position: absolute;
     top: 5px;
@@ -32,13 +32,13 @@ html, body {
     background: transparent !important;
 }
 
-/* KAPSUL ATAS UTAMA (Tinggi & Ukuran Diperbesar) */
+/* KAPSUL ATAS UTAMA */
 .top-capsule-bar {
     position: relative;
     width: 100%;
-    height: 48px; /* Lebih tinggi */
+    height: 48px;
     background: transparent !important;
-    border: 2px solid #ff69b4; /* Garis sedikit lebih tebal */
+    border: 2px solid #ff69b4;
     border-radius: 25px;
     display: flex;
     justify-content: space-between;
@@ -61,7 +61,7 @@ html, body {
     display: flex;
     flex-direction: row !important;
     align-items: center;
-    gap: 18px; /* Jarak antar menu lebih renggang */
+    gap: 18px;
     z-index: 2;
     flex: 1;
     background: transparent !important;
@@ -75,7 +75,7 @@ html, body {
     justify-content: flex-end;
 }
 
-/* KOTAK TENGAH TRANSPARAN (Diperbesar & Disesuaikan) */
+/* KOTAK TENGAH TRANSPARAN */
 .center-speed-box {
     position: absolute;
     top: -2px;
@@ -104,7 +104,7 @@ html, body {
 
 /* Sub Bar Bawah Kiri */
 .sub-bar-left {
-    height: 32px; /* Lebih tinggi */
+    height: 32px;
     background: transparent !important;
     border-left: 2px solid #ff69b4;
     border-bottom: 2px solid #ff69b4;
@@ -130,22 +130,33 @@ html, body {
     gap: 16px;
 }
 
-/* STYLING TEKS & IKON (Ukuran Diperbesar) */
+/* STYLING TEKS & IKON (Efek Outline Hitam Tebal) */
 .hud-item {
     display: flex;
     flex-direction: row !important;
     align-items: center;
     gap: 7px;
-    font-size: 14px; /* Teks jauh lebih besar & jelas */
+    font-size: 14px;
     font-weight: bold;
     color: #ffffff;
     white-space: nowrap;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
+    /* Outline Hitam di Teks & Ikon */
+    text-shadow: 
+        -1.5px -1.5px 0 #000,  
+         1.5px -1.5px 0 #000,
+        -1.5px  1.5px 0 #000,
+         1.5px  1.5px 0 #000,
+         0px    2px   4px rgba(0, 0, 0, 0.9);
 }
 
 .hud-item i {
     color: #ffffff;
-    font-size: 16px; /* Ikon diperbesar */
+    font-size: 16px;
+    /* Outline Hitam untuk Ikon FontAwesome */
+    filter: drop-shadow(-1px -1px 0 #000) 
+            drop-shadow(1px -1px 0 #000) 
+            drop-shadow(-1px 1px 0 #000) 
+            drop-shadow(1px 1px 0 #000);
 }
 
 .truck-slot {
@@ -160,11 +171,12 @@ html, body {
 .badge-vid {
     font-size: 12px;
     color: #ff69b4;
-    background: rgba(255, 105, 180, 0.2);
+    background: rgba(0, 0, 0, 0.6); /* Background lebih gelap biar makin kontras */
     padding: 2px 7px;
     border-radius: 4px;
-    border: 1px solid rgba(255, 105, 180, 0.5);
+    border: 1px solid #ff69b4;
     margin-left: 6px;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 .badge-plate {
@@ -175,4 +187,5 @@ html, body {
     border-radius: 4px;
     font-weight: bold;
     margin-left: 6px;
+    text-shadow: none; /* Plat nomor sudah background kuning teks hitam */
 }
