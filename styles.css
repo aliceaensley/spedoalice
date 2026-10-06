@@ -32,13 +32,13 @@ html, body {
     background: transparent !important;
 }
 
-/* KAPSUL ATAS UTAMA (Garis tengahnya sudah dibolongin/dipotong) */
+/* KAPSUL ATAS UTAMA (Garis Tepi Pink & Tengah Dipotong) */
 .top-capsule-bar {
     position: relative;
     width: 100%;
     height: 38px;
     background: transparent !important;
-    border: 1.5px solid rgba(220, 225, 230, 0.6);
+    border: 1.5px solid #ff69b4; /* Warna Garis Pink */
     border-radius: 20px;
     display: flex;
     justify-content: space-between;
@@ -75,7 +75,7 @@ html, body {
     justify-content: flex-end;
 }
 
-/* KOTAK TENGAH TRANSPARAN */
+/* KOTAK TENGAH TRANSPARAN (Garis Tepi Pink) */
 .center-speed-box {
     position: absolute;
     top: -1.5px;
@@ -84,7 +84,7 @@ html, body {
     width: 190px;
     height: 65px;
     background: transparent !important;
-    border: 1.5px solid rgba(220, 225, 230, 0.6);
+    border: 1.5px solid #ff69b4; /* Warna Garis Pink */
     border-bottom-left-radius: 14px;
     border-bottom-right-radius: 14px;
     z-index: 10;
@@ -102,12 +102,12 @@ html, body {
     background: transparent !important;
 }
 
-/* Sub Bar Bawah Kiri */
+/* Sub Bar Bawah Kiri (Garis Tepi Pink) */
 .sub-bar-left {
     height: 26px;
     background: transparent !important;
-    border-left: 1.5px solid rgba(220, 225, 230, 0.5);
-    border-bottom: 1.5px solid rgba(220, 225, 230, 0.5);
+    border-left: 1.5px solid #ff69b4; /* Warna Garis Pink */
+    border-bottom: 1.5px solid #ff69b4; /* Warna Garis Pink */
     border-bottom-left-radius: 12px;
     padding: 0 12px;
     display: flex;
@@ -116,12 +116,12 @@ html, body {
     gap: 12px;
 }
 
-/* Sub Bar Bawah Kanan */
+/* Sub Bar Bawah Kanan (Garis Tepi Pink) */
 .sub-bar-right {
     height: 26px;
     background: transparent !important;
-    border-right: 1.5px solid rgba(220, 225, 230, 0.5);
-    border-bottom: 1.5px solid rgba(220, 225, 230, 0.5);
+    border-right: 1.5px solid #ff69b4; /* Warna Garis Pink */
+    border-bottom: 1.5px solid #ff69b4; /* Warna Garis Pink */
     border-bottom-right-radius: 12px;
     padding: 0 12px;
     display: flex;
@@ -159,11 +159,11 @@ html, body {
 /* Badge VID dan Plat Nomor di HUD */
 .badge-vid {
     font-size: 10px;
-    color: #3498db;
-    background: rgba(52, 152, 219, 0.2);
+    color: #ff69b4;
+    background: rgba(255, 105, 180, 0.2);
     padding: 1px 5px;
     border-radius: 3px;
-    border: 1px solid rgba(52, 152, 219, 0.4);
+    border: 1px solid rgba(255, 105, 180, 0.4);
     margin-left: 4px;
 }
 
