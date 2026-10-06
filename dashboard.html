@@ -20,11 +20,11 @@
         }
 
         .dashboard-container {
-            max-width: 1000px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
-        /* Form Tambah Kendaraan */
+        /* Form Tambah Kendaraan Simple */
         .add-vehicle-card {
             background: #1e1e1e;
             padding: 20px;
@@ -36,8 +36,8 @@
 
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
             margin-bottom: 15px;
         }
 
@@ -56,7 +56,7 @@
             background: #2a2a2a;
             border: 1px solid #444;
             color: #fff;
-            padding: 8px 12px;
+            padding: 9px 12px;
             border-radius: 4px;
             font-size: 13px;
             outline: none;
@@ -131,26 +131,6 @@
             font-weight: bold;
         }
 
-        /* Progress Bar untuk Bensin & Mesin */
-        .progress-bar-bg {
-            width: 100%;
-            background-color: #333;
-            height: 10px;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-top: 4px;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            border-radius: 5px;
-            transition: width 0.3s ease;
-        }
-
-        .fill-health { background-color: #2ecc71; }
-        .fill-fuel { background-color: #3498db; }
-        .fill-warning { background-color: #e74c3c; }
-
         /* Tombol Aksi */
         .action-btns {
             display: flex;
@@ -182,9 +162,9 @@
 <div class="dashboard-container">
     <h2><i class="fa-solid fa-gauge-high"></i> Dashboard Monitor Kendaraan</h2>
 
-    <!-- FORM TAMBAH KENDARAAN BARU -->
+    <!-- FORM TAMBAH KENDARAAN BARU (SIMPEL TANPA BENSIN/HEALTH) -->
     <div class="add-vehicle-card">
-        <h3><i class="fa-solid fa-plus-node"></i> Tambah Kendaraan Baru</h3>
+        <h3><i class="fa-solid fa-plus"></i> Tambah Kendaraan Baru</h3>
         <form id="add-form" onsubmit="addVehicle(event)">
             <div class="form-grid">
                 <div class="form-group">
@@ -199,14 +179,6 @@
                     <label>Plat Nomor</label>
                     <input type="text" id="input-plate" placeholder="Misal: VL94FY3P" required>
                 </div>
-                <div class="form-group">
-                    <label>Mesin / Health (%)</label>
-                    <input type="number" id="input-health" min="0" max="100" step="0.1" value="100" required>
-                </div>
-                <div class="form-group">
-                    <label>Bensin / Fuel (%)</label>
-                    <input type="number" id="input-fuel" min="0" max="100" step="0.1" value="100" required>
-                </div>
             </div>
             <button type="submit" class="btn-add"><i class="fa-solid fa-plus"></i> Tambahkan ke Daftar</button>
         </form>
@@ -219,8 +191,6 @@
                 <th>Kendaraan</th>
                 <th>VID</th>
                 <th>Plat Nomor</th>
-                <th>Kondisi Mesin (Health)</th>
-                <th>Sisa Bensin (Fuel)</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -231,7 +201,7 @@
 <script>
     // Data bawaan awal
     let vehicles = [
-        { name: "Sandstrom", vid: "57761", plate: "VL94FY3P", health: 82.5, fuel: 45.0 }
+        { name: "Sandstrom", vid: "57761", plate: "VL94FY3P" }
     ];
 
     function renderVehicleList() {
@@ -239,26 +209,11 @@
         tbody.innerHTML = '';
 
         vehicles.forEach((v, index) => {
-            const healthClass = v.health < 40 ? 'fill-warning' : 'fill-health';
-            const fuelClass = v.fuel < 20 ? 'fill-warning' : 'fill-fuel';
-
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td><strong><i class="fa-solid fa-truck"></i> ${v.name}</strong></td>
                 <td><span class="badge-vid">${v.vid}</span></td>
                 <td><span class="badge-plate">${v.plate}</span></td>
-                <td>
-                    ${v.health.toFixed(1).replace('.', ',')}%
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill ${healthClass}" style="width: ${v.health}%"></div>
-                    </div>
-                </td>
-                <td>
-                    ${v.fuel.toFixed(1).replace('.', ',')}%
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill ${fuelClass}" style="width: ${v.fuel}%"></div>
-                    </div>
-                </td>
                 <td>
                     <div class="action-btns">
                         <button class="btn-link" onclick="copyHudLink('${v.name}', '${v.vid}', '${v.plate}')">
@@ -280,13 +235,11 @@
         const name = document.getElementById('input-name').value;
         const vid = document.getElementById('input-vid').value;
         const plate = document.getElementById('input-plate').value;
-        const health = parseFloat(document.getElementById('input-health').value);
-        const fuel = parseFloat(document.getElementById('input-fuel').value);
 
-        vehicles.push({ name, vid, plate, health, fuel });
+        vehicles.push({ name, vid, plate });
         renderVehicleList();
 
-        // Reset form
+        // Reset form input
         document.getElementById('add-form').reset();
     }
 
