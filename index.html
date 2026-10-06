@@ -3,39 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Speedometer</title>
+    <title>ETS2 Speedometer</title>
     <!-- FontAwesome untuk Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="hud-wrapper">
-        <div class="top-capsule-bar">
-            <!-- Sisi Kiri -->
-            <div class="left-section">
-                <!-- Slot Kosong untuk Input DAF/Truck dari Dashboard Nanti -->
-                <div class="truck-slot">
+    <div class="hud-container">
+        <!-- 1. Kapsul Atas Utama -->
+        <div class="top-capsule">
+            <!-- Sisi Kiri Top Bar -->
+            <div class="hud-group left-group">
+                <div class="hud-item truck-slot">
                     <i class="fa-solid fa-truck"></i>
                     <span id="truck-model"></span>
                 </div>
-                <div class="hud-item"><i class="fa-solid fa-power-off"></i><span id="engine">Off</span></div>
-                <div class="hud-item"><i class="fa-solid fa-gauge-high"></i><span id="speed">0 MPH</span></div>
-                <div class="hud-item"><i class="fa-solid fa-tachograph-digital"></i><span id="rpm">0 RPM</span></div>
-                <div class="hud-item"><i class="fa-solid fa-gas-pump"></i><span id="fuel">0%</span></div>
-                <div class="hud-item"><i class="fa-solid fa-heart-pulse"></i><span id="health">0%</span></div>
+                <div class="hud-item"><i class="fa-solid fa-power-off"></i> <span id="engine">Off</span></div>
+                <div class="hud-item"><i class="fa-solid fa-road"></i> <span id="odometer">0 Miles</span></div>
+                <div class="hud-item"><i class="fa-solid fa-heart-pulse"></i> <span id="health">0%</span></div>
+                <div class="hud-item"><i class="fa-solid fa-gas-pump"></i> <span id="fuel">0%</span></div>
             </div>
 
-            <!-- Kotak Tengah Tinggi & Transparan -->
-            <div class="center-spacer-box"></div>
-
-            <!-- Sisi Kanan -->
-            <div class="right-section">
-                <div class="hud-item"><i class="fa-solid fa-gear"></i><span id="gear">N</span></div>
-                <div class="hud-item"><i class="fa-solid fa-lightbulb"></i><span id="headlights">Off</span></div>
-                <div class="hud-item"><i class="fa-solid fa-arrows-left-right"></i><span id="indicators">Off / Off</span></div>
-                <div class="hud-item"><i class="fa-solid fa-user-shield"></i><span id="seatbelts">Off</span></div>
-                <div class="hud-item"><i class="fa-solid fa-road"></i><span id="odometer">0 Miles</span></div>
+            <!-- KOTAK TENGAH (Nempel ke Top Bar & Menjulur ke Bawah) -->
+            <div class="center-speed-box">
+                <!-- Dikosongkan & Transparan sesuai permintaan -->
             </div>
+
+            <!-- Sisi Kanan Top Bar -->
+            <div class="hud-group right-group">
+                <div class="hud-item"><i class="fa-solid fa-gear"></i> <span id="gear">N</span></div>
+                <div class="hud-item"><i class="fa-solid fa-lightbulb"></i> <span id="headlights">Off</span></div>
+                <div class="hud-item"><i class="fa-solid fa-user-shield"></i> <span id="seatbelts">Off</span></div>
+            </div>
+        </div>
+
+        <!-- 2. Sub Bar Bawah Kiri -->
+        <div class="bottom-sub-bar">
+            <div class="hud-item"><i class="fa-solid fa-gauge-high"></i> <span id="speed">0 MPH</span></div>
+            <div class="hud-item"><i class="fa-solid fa-arrows-left-right"></i> <span id="indicators">Off / Off</span></div>
+            <div class="hud-item"><i class="fa-solid fa-tachograph-digital"></i> <span id="rpm">0 RPM</span></div>
         </div>
     </div>
 
