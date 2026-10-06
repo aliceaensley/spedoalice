@@ -3,129 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JGVRP Speedometer</title>
+    <title>ETS2 Style Speedometer</title>
+    <!-- FontAwesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-
-    <main class="hud">
-
-        <!-- TOP BAR -->
+    <div class="hud-container">
+        <!-- Barisan Atas (Atas/Top Bar) -->
         <div class="top-bar">
-
-            <!-- VEHICLE -->
-            <div class="vehicle-info">
-                <span class="vehicle-icon">▰</span>
-                <span id="vehicleName">DAF XF</span>
-            </div>
-
-            <!-- ODOMETER -->
-            <div class="info-item">
-                <span class="icon">◉</span>
-                <span id="odometer">9.315 km</span>
-            </div>
-
-            <!-- FUEL -->
-            <div class="info-item">
-                <span class="icon">♨</span>
-                <span id="fuel">33%</span>
-            </div>
-
-            <!-- LIGHTS -->
-            <div class="light-status">
-                <span id="leftIndicator" class="indicator">◀</span>
-                <span id="headlights" class="light">▮</span>
-                <span id="rightIndicator" class="indicator">▶</span>
-            </div>
-
-            <!-- CARGO / WEIGHT -->
-            <div class="info-item">
-                <span class="icon">▣</span>
-                <span id="cargo">592 / 800 L</span>
-            </div>
-
-            <!-- DISTANCE -->
-            <div class="info-item">
-                <span class="icon">▤</span>
-                <span id="distance">2.091 km</span>
-            </div>
-
-            <!-- SETTINGS -->
-            <div class="settings">
-                ⚙
-            </div>
-
-            <!-- MUSIC / STATUS -->
-            <div class="status-text">
-                Free as the wind
-            </div>
-
+            <div class="hud-item"><i class="fa-solid fa-truck"></i> <span id="truck-model">DAF XF</span></div>
+            <div class="hud-item"><i class="fa-solid fa-road"></i> <span id="odometer">0 KM</span></div>
+            <div class="hud-item"><i class="fa-solid fa-wrench"></i> <span id="health">0%</span></div>
+            <div class="hud-item"><i class="fa-solid fa-gas-pump"></i> <span id="fuel">0%</span></div>
+            <div class="hud-item"><i class="fa-solid fa-power-off"></i> <span id="engine">Off</span></div>
         </div>
 
-
-        <!-- CENTER SPEED PANEL -->
-        <div class="speed-panel">
-
-            <div class="gear" id="gear">
-                R1
-            </div>
-
-            <div class="speed">
-                <span id="speed">0</span>
-                <span class="speed-unit" id="speedUnit">km/h</span>
-            </div>
-
+        <!-- Barisan Bawah / Info Tambahan -->
+        <div class="sub-bar">
+            <div class="hud-sub-item"><i class="fa-solid fa-lightbulb"></i> Lampu: <span id="headlights">Off</span></div>
+            <div class="hud-sub-item"><i class="fa-solid fa-arrows-left-right"></i> Sein: <span id="indicators">Off / Off</span></div>
+            <div class="hud-sub-item"><i class="fa-solid fa-user-slash"></i> Sabuk: <span id="seatbelts">Off</span></div>
         </div>
 
-
-        <!-- LOWER INFORMATION -->
-        <div class="lower-info">
-
-            <!-- PRESSURE -->
-            <div class="lower-item">
-                <span class="small-icon">◉</span>
-                <span id="pressure">145 PSI</span>
+        <!-- Kotak Tengah (Kecepatan & Gigi) -->
+        <div class="speed-box">
+            <div class="gear-icon"><i class="fa-solid fa-gear"></i></div>
+            <div class="speed-display">
+                <span id="speed" class="speed-value">0 KMH</span>
             </div>
-
-            <!-- ENGINE -->
-            <div class="lower-item">
-                <span class="small-icon">◉</span>
-                <span id="engine">OFF</span>
+            <div class="gear-and-rpm">
+                <span class="gear-label">Gear: <strong id="gear">N</strong></span>
+                <span class="rpm-label"><i class="fa-solid fa-gauge"></i> <span id="rpm">0 RPM</span></span>
             </div>
-
-            <!-- RPM -->
-            <div class="lower-item rpm-item">
-                <span class="small-icon">◉</span>
-                <span id="rpm">0 RPM</span>
-            </div>
-
         </div>
-
-
-        <!-- RIGHT PERFORMANCE -->
-        <div class="performance">
-
-            <div class="performance-item">
-                <span>CPU</span>
-                <strong id="cpu">35%</strong>
-            </div>
-
-            <div class="performance-item">
-                <span>MEM</span>
-                <strong id="memory">29</strong>
-            </div>
-
-            <div class="performance-item">
-                <span>GPU</span>
-                <strong id="gpu">83%</strong>
-            </div>
-
-        </div>
-
-    </main>
+    </div>
 
     <script src="script.js"></script>
-
 </body>
 </html>
