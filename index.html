@@ -3,40 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Speedometer Template</title>
-    <link rel="stylesheet" href="/styles.css">
+    <title>JGVRP Speedometer</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <main class="speedometer">
-        <section>
-            <dl>
-                <dt>Engine</dt>
-                <dd id="engine">&nbsp;</dd>
-                <dt>Speed</dt>
-                <dd id="speed">&nbsp;</dd>
-                <dt>RPM</dt>
-                <dd id="rpm">&nbsp;</dd>
-                <dt>Fuel</dt>
-                <dd id="fuel">&nbsp;</dd>
-                <dt>Health</dt>
-                <dd id="health">&nbsp;</dd>
-            </dl>
-        </section>
-        <section>
-            <dl>
-                <dt>Gear</dt>
-                <dd id="gear">&nbsp;</dd>
-                <dt>Headlights</dt>
-                <dd id="headlights">&nbsp;</dd>
-                <dt>Indicators</dt>
-                <dd id="indicators">&nbsp;</dd>
-                <dt>Seatbelts</dt>
-                <dd id="seatbelts">&nbsp;</dd>
-                <dt>Odometer</dt>
-                <dd id="odometer">&nbsp;</dd>
-            </dl>
-        </section>
+
+    <main class="hud">
+
+        <!-- TOP BAR -->
+        <div class="top-bar">
+
+            <!-- VEHICLE -->
+            <div class="vehicle-info">
+                <span class="vehicle-icon">▰</span>
+                <span id="vehicleName">DAF XF</span>
+            </div>
+
+            <!-- ODOMETER -->
+            <div class="info-item">
+                <span class="icon">◉</span>
+                <span id="odometer">9.315 km</span>
+            </div>
+
+            <!-- FUEL -->
+            <div class="info-item">
+                <span class="icon">♨</span>
+                <span id="fuel">33%</span>
+            </div>
+
+            <!-- LIGHTS -->
+            <div class="light-status">
+                <span id="leftIndicator" class="indicator">◀</span>
+                <span id="headlights" class="light">▮</span>
+                <span id="rightIndicator" class="indicator">▶</span>
+            </div>
+
+            <!-- CARGO / WEIGHT -->
+            <div class="info-item">
+                <span class="icon">▣</span>
+                <span id="cargo">592 / 800 L</span>
+            </div>
+
+            <!-- DISTANCE -->
+            <div class="info-item">
+                <span class="icon">▤</span>
+                <span id="distance">2.091 km</span>
+            </div>
+
+            <!-- SETTINGS -->
+            <div class="settings">
+                ⚙
+            </div>
+
+            <!-- MUSIC / STATUS -->
+            <div class="status-text">
+                Free as the wind
+            </div>
+
+        </div>
+
+
+        <!-- CENTER SPEED PANEL -->
+        <div class="speed-panel">
+
+            <div class="gear" id="gear">
+                R1
+            </div>
+
+            <div class="speed">
+                <span id="speed">0</span>
+                <span class="speed-unit" id="speedUnit">km/h</span>
+            </div>
+
+        </div>
+
+
+        <!-- LOWER INFORMATION -->
+        <div class="lower-info">
+
+            <!-- PRESSURE -->
+            <div class="lower-item">
+                <span class="small-icon">◉</span>
+                <span id="pressure">145 PSI</span>
+            </div>
+
+            <!-- ENGINE -->
+            <div class="lower-item">
+                <span class="small-icon">◉</span>
+                <span id="engine">OFF</span>
+            </div>
+
+            <!-- RPM -->
+            <div class="lower-item rpm-item">
+                <span class="small-icon">◉</span>
+                <span id="rpm">0 RPM</span>
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT PERFORMANCE -->
+        <div class="performance">
+
+            <div class="performance-item">
+                <span>CPU</span>
+                <strong id="cpu">35%</strong>
+            </div>
+
+            <div class="performance-item">
+                <span>MEM</span>
+                <strong id="memory">29</strong>
+            </div>
+
+            <div class="performance-item">
+                <span>GPU</span>
+                <strong id="gpu">83%</strong>
+            </div>
+
+        </div>
+
     </main>
-    <script src="/script.js"></script>
+
+    <script src="script.js"></script>
+
 </body>
 </html>
