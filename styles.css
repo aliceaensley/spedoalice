@@ -130,7 +130,7 @@ html, body {
     gap: 16px;
 }
 
-/* STYLING TEKS & IKON (Efek Outline Hitam Tebal) */
+/* STYLING TEKS & IKON */
 .hud-item {
     display: flex;
     flex-direction: row !important;
@@ -140,7 +140,6 @@ html, body {
     font-weight: bold;
     color: #ffffff;
     white-space: nowrap;
-    /* Outline Hitam di Teks & Ikon */
     text-shadow: 
         -1.5px -1.5px 0 #000,  
          1.5px -1.5px 0 #000,
@@ -152,7 +151,6 @@ html, body {
 .hud-item i {
     color: #ffffff;
     font-size: 16px;
-    /* Outline Hitam untuk Ikon FontAwesome */
     filter: drop-shadow(-1px -1px 0 #000) 
             drop-shadow(1px -1px 0 #000) 
             drop-shadow(-1px 1px 0 #000) 
@@ -163,15 +161,27 @@ html, body {
     min-width: 50px;
 }
 
+/* SYTLING RPM DENGAN REDLINE */
 .rpm-item span {
     color: #2ecc71;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
 }
 
-/* Badge VID dan Plat Nomor di HUD */
+.rpm-item span.rpm-high {
+    color: #e74c3c !important; /* Warna Merah Redline */
+    text-shadow: 
+        -1.5px -1.5px 0 #000,  
+         1.5px -1.5px 0 #000,
+        -1.5px  1.5px 0 #000,
+         1.5px  1.5px 0 #000,
+         0 0 8px rgba(231, 76, 60, 0.8) !important;
+}
+
+/* Badge VID dan Plat Nomor */
 .badge-vid {
     font-size: 12px;
     color: #ff69b4;
-    background: rgba(0, 0, 0, 0.6); /* Background lebih gelap biar makin kontras */
+    background: rgba(0, 0, 0, 0.6);
     padding: 2px 7px;
     border-radius: 4px;
     border: 1px solid #ff69b4;
@@ -187,5 +197,5 @@ html, body {
     border-radius: 4px;
     font-weight: bold;
     margin-left: 6px;
-    text-shadow: none; /* Plat nomor sudah background kuning teks hitam */
+    text-shadow: none;
 }
