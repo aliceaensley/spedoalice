@@ -296,15 +296,11 @@
 </div>
 
 <script>
-    // Ambil data kendaraan dari localStorage browser
-    let defaultVehicles = [
-        { name: "Sandstrom", vid: "57761", plate: "VL94FY3P", health: 82.5, fuel: 45.0 }
-    ];
-
-    let vehicles = JSON.parse(localStorage.getItem('saved_vehicles')) || defaultVehicles;
+    // Menyimpan daftar kendaraan langsung di memori browser
+    let vehicles = JSON.parse(localStorage.getItem('my_vehicles_data')) || [];
 
     function saveToStorage() {
-        localStorage.setItem('saved_vehicles', JSON.stringify(vehicles));
+        localStorage.setItem('my_vehicles_data', JSON.stringify(vehicles));
     }
 
     function renderVehicleList() {
@@ -312,6 +308,11 @@
         if (!tbody) return;
         
         tbody.innerHTML = '';
+
+        if (vehicles.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #888;">Belum ada kendaraan. Silakan tambah kendaraan di atas.</td></tr>`;
+            return;
+        }
 
         vehicles.forEach((v, index) => {
             const healthClass = v.health < 40 ? 'fill-warning' : 'fill-health';
@@ -359,6 +360,7 @@
         const vid = document.getElementById('input-vid').value;
         const plate = document.getElementById('input-plate').value;
 
+        // Default awal saat pertama kali ditambah
         const health = 100.0;
         const fuel = 100.0;
 
