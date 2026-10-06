@@ -1,99 +1,381 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Kendaraan</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HUD Dashboard - Status Kendaraan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
 
-    body {
-      background-color: #0f172a;
-      color: #f8fafc;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
+        h2, h3 {
+            color: #ff69b4;
+            margin-bottom: 15px;
+        }
 
-    .dashboard {
-      background-color: #1e293b;
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-      width: 100%;
-      max-width: 500px;
-    }
+        .dashboard-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
 
-    .dashboard-header {
-      text-align: center;
-      margin-bottom: 2rem;
-      border-bottom: 1px solid #334155;
-      padding-bottom: 1rem;
-    }
+        /* Form Tambah Kendaraan */
+        .add-vehicle-card {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
 
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-    }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
 
-    .card {
-      background-color: #334155;
-      padding: 1.5rem;
-      border-radius: 0.75rem;
-      text-align: center;
-      transition: transform 0.2s ease;
-    }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
 
-    .card:hover {
-      transform: translateY(-5px);
-    }
+        .form-group label {
+            font-size: 12px;
+            color: #ccc;
+        }
 
-    .card-title {
-      font-size: 0.875rem;
-      color: #94a3b8;
-      margin-bottom: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
+        .form-group input {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 9px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            outline: none;
+        }
 
-    .card-value {
-      font-size: 1.75rem;
-      font-weight: bold;
-      color: #38bdf8;
-    }
+        .form-group input:focus {
+            border-color: #ff69b4;
+        }
 
-    .unit {
-      font-size: 1rem;
-      color: #cbd5e1;
-    }
-  </style>
+        .btn-add {
+            background: #ff69b4;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-add:hover {
+            background: #ff85c1;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+        }
+
+        /* Styling Tabel Kendaraan */
+        .vehicle-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #1e1e1e;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .vehicle-table th {
+            background-color: #ff69b4;
+            color: #000000;
+            text-align: left;
+            padding: 12px 15px;
+            font-size: 14px;
+        }
+
+        .vehicle-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #333333;
+            font-size: 13px;
+        }
+
+        .vehicle-table tr:hover {
+            background-color: #2a2a2a;
+        }
+
+        /* Badge VID & Plat */
+        .badge-vid {
+            color: #ff69b4;
+            background: rgba(255, 105, 180, 0.15);
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid #ff69b4;
+            font-weight: bold;
+        }
+
+        .badge-plate {
+            color: #000;
+            background: #f1c40f;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        /* Tombol Aksi */
+        .action-btns {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-link {
+            background: #ff69b4;
+            color: #000;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-edit {
+            background: #f39c12;
+            color: #fff;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-delete {
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Styling Modal Edit */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-card {
+            background: #1e1e1e;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #ff69b4;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.2);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-cancel {
+            background: #555;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="dashboard">
-    <div class="dashboard-header">
-      <h2>Dashboard Kendaraan</h2>
+<div class="dashboard-container">
+    <h2><i class="fa-solid fa-gauge-high"></i> Dashboard Monitor Kendaraan</h2>
+
+    <!-- FORM INPUT KENDARAAN -->
+    <div class="add-vehicle-card">
+        <h3><i class="fa-solid fa-plus"></i> Tambah Kendaraan Baru</h3>
+        <form id="add-form" onsubmit="addVehicle(event)">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Nama Kendaraan</label>
+                    <input type="text" id="input-name" placeholder="Misal: Sandstrom" required>
+                </div>
+                <div class="form-group">
+                    <label>VID</label>
+                    <input type="text" id="input-vid" placeholder="Misal: 57761" required>
+                </div>
+                <div class="form-group">
+                    <label>Plat Nomor</label>
+                    <input type="text" id="input-plate" placeholder="Misal: VL94FY3P" required>
+                </div>
+            </div>
+            <button type="submit" class="btn-add"><i class="fa-solid fa-plus"></i> Tambahkan ke Daftar</button>
+        </form>
     </div>
 
-    <div class="metrics-grid">
-      <div class="card">
-        <div class="card-title">Kecepatan</div>
-        <div class="card-value">60 <span class="unit">km/jam</span></div>
-      </div>
+    <!-- TABEL DAFTAR KENDARAAN -->
+    <table class="vehicle-table">
+        <thead>
+            <tr>
+                <th>Kendaraan</th>
+                <th>VID</th>
+                <th>Plat Nomor</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="vehicle-list"></tbody>
+    </table>
+</div>
 
-      <div class="card">
-        <div class="card-title">Odometer</div>
-        <div class="card-value">12.450 <span class="unit">km</span></div>
-      </div>
+<!-- MODAL EDIT KENDARAAN -->
+<div id="edit-modal" class="modal-overlay">
+    <div class="modal-card">
+        <h3><i class="fa-solid fa-pen-to-square"></i> Edit Kendaraan</h3>
+        <form id="edit-form" onsubmit="updateVehicle(event)">
+            <input type="hidden" id="edit-index">
+            <div class="form-group" style="margin-bottom: 10px;">
+                <label>Nama Kendaraan</label>
+                <input type="text" id="edit-name" required>
+            </div>
+            <div class="form-group" style="margin-bottom: 10px;">
+                <label>VID</label>
+                <input type="text" id="edit-vid" required>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label>Plat Nomor</label>
+                <input type="text" id="edit-plate" required>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" onclick="closeEditModal()">Batal</button>
+                <button type="submit" class="btn-add"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+            </div>
+        </form>
     </div>
-  </div>
+</div>
+
+<script>
+    // Data disimpan di browser
+    let vehicles = JSON.parse(localStorage.getItem('my_vehicles_data')) || [];
+
+    function saveToStorage() {
+        localStorage.setItem('my_vehicles_data', JSON.stringify(vehicles));
+    }
+
+    function renderVehicleList() {
+        const tbody = document.getElementById('vehicle-list');
+        if (!tbody) return;
+        
+        tbody.innerHTML = '';
+
+        if (vehicles.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #888;">Belum ada kendaraan. Silakan tambah kendaraan di atas.</td></tr>`;
+            return;
+        }
+
+        vehicles.forEach((v, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><strong><i class="fa-solid fa-truck"></i> ${v.name}</strong></td>
+                <td><span class="badge-vid">${v.vid}</span></td>
+                <td><span class="badge-plate">${v.plate}</span></td>
+                <td>
+                    <div class="action-btns">
+                        <button class="btn-link" onclick="copyHudLink('${v.name}', '${v.vid}', '${v.plate}')">
+                            <i class="fa-solid fa-copy"></i> Salin Link
+                        </button>
+                        <button class="btn-edit" onclick="openEditModal(${index})">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                        <button class="btn-delete" onclick="deleteVehicle(${index})">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    function addVehicle(event) {
+        event.preventDefault();
+        
+        const name = document.getElementById('input-name').value;
+        const vid = document.getElementById('input-vid').value;
+        const plate = document.getElementById('input-plate').value;
+
+        vehicles.push({ name, vid, plate });
+        saveToStorage();
+        renderVehicleList();
+
+        document.getElementById('add-form').reset();
+    }
+
+    function deleteVehicle(index) {
+        vehicles.splice(index, 1);
+        saveToStorage();
+        renderVehicleList();
+    }
+
+    function openEditModal(index) {
+        const vehicle = vehicles[index];
+        document.getElementById('edit-index').value = index;
+        document.getElementById('edit-name').value = vehicle.name;
+        document.getElementById('edit-vid').value = vehicle.vid;
+        document.getElementById('edit-plate').value = vehicle.plate;
+        document.getElementById('edit-modal').style.display = 'flex';
+    }
+
+    function closeEditModal() {
+        document.getElementById('edit-modal').style.display = 'none';
+    }
+
+    function updateVehicle(event) {
+        event.preventDefault();
+        
+        const index = document.getElementById('edit-index').value;
+        const name = document.getElementById('edit-name').value;
+        const vid = document.getElementById('edit-vid').value;
+        const plate = document.getElementById('edit-plate').value;
+
+        vehicles[index].name = name;
+        vehicles[index].vid = vid;
+        vehicles[index].plate = plate;
+
+        saveToStorage();
+        renderVehicleList();
+        closeEditModal();
+    }
+
+    function copyHudLink(name, vid, plate) {
+        const generatedUrl = `https://aliceaensley.github.io/spedoalice/index.html?name=${encodeURIComponent(name)}&vid=${vid}&plate=${plate}&v=1`;
+        
+        navigator.clipboard.writeText(generatedUrl).then(() => {
+            alert(`Link HUD untuk ${name} berhasil disalin!\n\nURL: ${generatedUrl}`);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', renderVehicleList);
+</script>
 
 </body>
 </html>
