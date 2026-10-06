@@ -43,7 +43,7 @@ html, body {
     padding: 0 20px;
 }
 
-/* KELOMPOK ITEM ATAS KIRI & KANAN (Dibuat Simetris) */
+/* KELOMPOK ITEM ATAS KIRI & KANAN */
 .top-left-group, .top-right-group {
     display: flex;
     flex-direction: row !important;
