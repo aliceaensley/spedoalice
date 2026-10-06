@@ -13,7 +13,7 @@
     <div class="hud-container">
         <!-- BARISAN UTAMA (KAPSUL ATAS) -->
         <div class="top-capsule-bar">
-            <!-- Kiri Top Bar (Tersisa Kendaraan & Odometer) -->
+            <!-- Kiri Top Bar (Nama Mobil & Odometer) -->
             <div class="top-left-group">
                 <div class="hud-item truck-slot">
                     <i class="fa-solid fa-truck"></i>
@@ -27,10 +27,8 @@
             <!-- KOTAK TENGAH TRANSPARAN -->
             <div class="center-speed-box"></div>
 
-            <!-- Kanan Top Bar (Ditambahkan Health & Fuel di sini) -->
+            <!-- Kanan Top Bar (Gear, Engine, Lampu, Sabuk) -->
             <div class="top-right-group">
-                <div class="hud-item"><i class="fa-solid fa-wrench"></i> <span id="health">0%/100%</span></div>
-                <div class="hud-item"><i class="fa-solid fa-gas-pump"></i> <span id="fuel">0%/100%</span></div>
                 <div class="hud-item"><i class="fa-solid fa-gear"></i> Gear: <span id="gear">N</span></div>
                 <div class="hud-item"><i class="fa-solid fa-power-off"></i> <span id="engine">Off</span></div>
                 <div class="hud-item"><i class="fa-solid fa-lightbulb"></i> <span id="headlights">Off</span></div>
@@ -40,14 +38,16 @@
 
         <!-- BARISAN SUB BAR BAWAH -->
         <div class="bottom-bars-wrapper">
-            <!-- Sub Bar Bawah Kiri -->
+            <!-- Sub Bar Bawah Kiri (Kecepatan & Lampu Sen) -->
             <div class="sub-bar-left">
                 <div class="hud-item"><i class="fa-solid fa-gauge-high"></i> <span id="speed">0 MPH</span></div>
                 <div class="hud-item"><i class="fa-solid fa-arrows-left-right"></i> <span id="indicators">Off / Off</span></div>
             </div>
 
-            <!-- Sub Bar Bawah Kanan -->
+            <!-- Sub Bar Bawah Kanan (Pindahan Health & Fuel + RPM) -->
             <div class="sub-bar-right">
+                <div class="hud-item"><i class="fa-solid fa-wrench"></i> <span id="health">0%/100%</span></div>
+                <div class="hud-item"><i class="fa-solid fa-gas-pump"></i> <span id="fuel">0%/100%</span></div>
                 <div class="hud-item rpm-item"><i class="fa-solid fa-tachograph-digital"></i> <span id="rpm">0 RPM</span></div>
             </div>
         </div>
