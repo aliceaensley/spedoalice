@@ -201,7 +201,7 @@ html, body {
 }
 
 /* =========================================================
-   STYLING SPEDO KEDUA (DESAIN NEON CYAN PRESISI)
+   STYLING SPEDO KEDUA (PINK GLOW MATCHING SPEDO ATAS)
    ========================================================= */
 .analog-speedo-container {
     position: fixed;
@@ -211,7 +211,7 @@ html, body {
     height: 240px;
     z-index: 9999;
     pointer-events: none;
-    filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.4));
+    filter: drop-shadow(0 0 12px rgba(255, 105, 180, 0.4));
 }
 
 .analog-gauge {
@@ -219,29 +219,29 @@ html, body {
     height: 100%;
 }
 
-/* Ring Neon Cyan */
+/* Ring Pink */
 .gauge-neon-ring {
     fill: none;
-    stroke: #00d4ff;
+    stroke: #ff69b4;
     stroke-width: 3.5;
-    filter: drop-shadow(0 0 6px #00d4ff);
+    filter: drop-shadow(0 0 6px #ff69b4);
 }
 
 .gauge-bg {
-    fill: #111518;
-    stroke: #007799;
+    fill: #121212;
+    stroke: #ff69b4;
     stroke-width: 1.5;
 }
 
 .gauge-red-zone {
-    fill: #c0392b;
-    opacity: 0.45;
+    fill: #e74c3c;
+    opacity: 0.5;
 }
 
 /* Striping Skala */
 .gauge-ticks {
     fill: none;
-    stroke: #00d4ff;
+    stroke: #ff69b4;
     stroke-width: 2.5;
     stroke-dasharray: 2, 6;
 }
@@ -251,21 +251,21 @@ html, body {
     font-family: 'Segoe UI', Arial, sans-serif;
     font-size: 11px;
     font-weight: bold;
-    fill: #00d4ff;
+    fill: #ff69b4;
     text-anchor: middle;
     letter-spacing: 1px;
 }
 
-/* Angka Cyan Neon Presisi */
+/* Angka Pink Neon */
 .gauge-num {
     font-family: 'Arial Black', sans-serif;
     font-size: 10px;
     font-weight: 900;
-    fill: #00d4ff;
+    fill: #ffffff;
     text-anchor: middle;
     dominant-baseline: central;
     user-select: none;
-    filter: drop-shadow(0 0 2px #00d4ff);
+    filter: drop-shadow(0 0 2px #ff69b4);
 }
 
 .gauge-num-red {
@@ -273,24 +273,24 @@ html, body {
     filter: drop-shadow(0 0 2px #ff4d4d);
 }
 
-/* Jarum Merah Glowing */
+/* Jarum Putih Glowing */
 .gauge-needle {
-    stroke: #ff2a2a;
+    stroke: #ffffff;
     stroke-width: 3.5;
     stroke-linecap: round;
     transform-origin: 100px 100px;
     transition: transform 0.05s linear;
-    filter: drop-shadow(0 0 6px #ff0000);
+    filter: drop-shadow(0 0 6px #ffffff);
 }
 
 /* Tutup Tengah Jarum */
 .gauge-center-cap-outer {
-    fill: #00d4ff;
+    fill: #ff69b4;
 }
 
 .gauge-center-cap-inner {
-    fill: #111518;
-    stroke: #00d4ff;
+    fill: #121212;
+    stroke: #ff69b4;
     stroke-width: 1.5;
 }
 
@@ -313,21 +313,21 @@ html, body {
 .gear-box {
     position: absolute;
     top: 110px;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.8);
     padding: 1px 8px;
     font-size: 16px;
     border-radius: 4px;
-    border: 1px solid #00d4ff;
-    color: #00d4ff;
+    border: 1px solid #ff69b4;
+    color: #ff69b4;
 }
 
 .speed-box {
     position: absolute;
     top: 138px;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.8);
     padding: 1px 12px;
     font-size: 20px;
     border-radius: 4px;
-    border: 1px solid #00d4ff;
+    border: 1px solid #ff69b4;
     color: #ffffff;
 }
