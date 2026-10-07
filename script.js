@@ -45,11 +45,11 @@ function setSpeed(speed) {
         elements.analogSpeed.innerText = calculatedSpeed;
     }
 
-    // 2. Rotasi Jarum Merah Berdasarkan Kecepatan (MPH 0 - 240)
-    // -125 deg = Angka 0 | +125 deg = Angka 240
+    // 2. Rotasi Jarum Berdasarkan Kecepatan (MPH 0 - 240)
+    // 0 deg = Angka 0 MPH | 250 deg = Angka 240 MPH
     if (elements.analogNeedle) {
-        const minAngle = -125;
-        const maxAngle = 125;
+        const minAngle = 0;
+        const maxAngle = 250;
         const maxSpeedLimit = 240; 
         
         const currentSpeed = Math.min(Math.max(calculatedSpeed, 0), maxSpeedLimit);
@@ -165,6 +165,9 @@ function initElements() {
     };
 
     loadConfigFromURL();
+    
+    // Set posisi jarum awal ke 0 saat pertama kali dimuat
+    setSpeed(0);
 }
 
 document.addEventListener('DOMContentLoaded', initElements);
