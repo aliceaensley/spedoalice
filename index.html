@@ -53,42 +53,49 @@
         </div>
     </div>
 
-    <!-- SPEDO KEDUA (ANALOG TACHOMETER BAWAH KANAN DENGAN ANGKA 0-9) -->
+    <!-- SPEDO KEDUA (NEON CYAN SPEEDOMETER BAWAH KANAN) -->
     <div class="analog-speedo-container">
         <svg class="analog-gauge" viewBox="0 0 200 200">
-            <!-- Background Lingkaran Spedo -->
-            <circle cx="100" cy="100" r="90" class="gauge-bg" />
+            <!-- Ring Luar Cyan Neon Glow -->
+            <circle cx="100" cy="100" r="92" class="gauge-neon-ring" />
+            <circle cx="100" cy="100" r="88" class="gauge-bg" />
             
-            <!-- Zona Garis/Aksen Oranye & Redline -->
-            <path d="M 100 100 L 163.6 36.4 A 90 90 0 0 1 190 100 Z" class="gauge-orange-zone" />
-            <path d="M 100 100 L 163.6 36.4 A 90 90 0 0 1 152.9 163.6 Z" class="gauge-red-zone" />
+            <!-- Zona Redline Kecepatan Tinggi (180 - 240) -->
+            <path d="M 100 100 L 162.2 37.8 A 88 88 0 0 1 144 176.2 Z" class="gauge-red-zone" />
             
-            <!-- Ring Luar Striping -->
-            <circle cx="100" cy="100" r="88" class="gauge-ring" />
+            <!-- Striping Skala Garis-Garis -->
+            <circle cx="100" cy="100" r="83" class="gauge-ticks" />
             
-            <!-- ANGKA SKALA ANALOG (0 - 9) -->
-            <text x="38" y="146" class="gauge-num">0</text>
-            <text x="28" y="112" class="gauge-num">1</text>
-            <text x="32" y="76" class="gauge-num">2</text>
-            <text x="50" y="48" class="gauge-num">3</text>
-            <text x="80" y="32" class="gauge-num">4</text>
-            <text x="115" y="32" class="gauge-num">5</text>
-            <text x="146" y="48" class="gauge-num">6</text>
-            <text x="162" y="76" class="gauge-num gauge-num-red">7</text>
-            <text x="164" y="112" class="gauge-num gauge-num-red">8</text>
-            <text x="154" y="146" class="gauge-num gauge-num-red">9</text>
+            <!-- Teks Satuan MPH -->
+            <text x="100" y="75" class="gauge-unit-text">mph</text>
 
-            <!-- Jarum Analog (Rotasi via JS) -->
-            <line id="analog-needle" x1="100" y1="100" x2="30" y2="140" class="gauge-needle" />
-            <circle cx="100" cy="100" r="8" class="gauge-center-cap" />
+            <!-- Angka Skala Kecepatan (0 - 240 MPH) -->
+            <text x="52" y="162" class="gauge-num">0</text>
+            <text x="35" y="132" class="gauge-num">20</text>
+            <text x="32" y="96" class="gauge-num">40</text>
+            <text x="42" y="62" class="gauge-num">60</text>
+            <text x="64" y="38" class="gauge-num">80</text>
+            <text x="100" y="28" class="gauge-num">100</text>
+            <text x="136" y="38" class="gauge-num">120</text>
+            <text x="158" y="62" class="gauge-num">140</text>
+            <text x="168" y="96" class="gauge-num">160</text>
+            <text x="165" y="132" class="gauge-num gauge-num-red">180</text>
+            <text x="148" y="162" class="gauge-num gauge-num-red">200</text>
+            <text x="122" y="180" class="gauge-num gauge-num-red">220</text>
+            <text x="90" y="186" class="gauge-num gauge-num-red">240</text>
+
+            <!-- Jarum Merah Neon -->
+            <line id="analog-needle" x1="100" y1="100" x2="30" y2="150" class="gauge-needle" />
+            
+            <!-- Tutup Tengah Jarum -->
+            <circle cx="100" cy="100" r="11" class="gauge-center-cap-outer" />
+            <circle cx="100" cy="100" r="9" class="gauge-center-cap-inner" />
         </svg>
 
-        <!-- Display Angka Di Tengah Jarum (Digital) -->
+        <!-- Display Digital Tambahan di Tengah -->
         <div class="analog-display">
             <div class="gear-box" id="analog-gear">1</div>
             <div class="speed-box" id="analog-speed">0</div>
-            <div class="unit-text">MPH</div>
-            <div class="rpm-text">RPM <br><span>x1000</span></div>
         </div>
     </div>
 
