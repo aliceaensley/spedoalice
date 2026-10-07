@@ -53,6 +53,33 @@
         </div>
     </div>
 
+    <!-- SPEDO KEDUA (ANALOG TACHOMETER BAWAH KANAN) -->
+    <div class="analog-speedo-container">
+        <svg class="analog-gauge" viewBox="0 0 200 200">
+            <!-- Background Lingkaran Spedo -->
+            <circle cx="100" cy="100" r="90" class="gauge-bg" />
+            
+            <!-- Zona Garis/Aksen Oranye & Redline -->
+            <path d="M 100 100 L 163.6 36.4 A 90 90 0 0 1 190 100 Z" class="gauge-orange-zone" />
+            <path d="M 100 100 L 163.6 36.4 A 90 90 0 0 1 152.9 163.6 Z" class="gauge-red-zone" />
+            
+            <!-- Ring Luar Striping -->
+            <circle cx="100" cy="100" r="88" class="gauge-ring" />
+            
+            <!-- Jarum Analog (Rotasi via JS) -->
+            <line id="analog-needle" x1="100" y1="100" x2="30" y2="140" class="gauge-needle" />
+            <circle cx="100" cy="100" r="8" class="gauge-center-cap" />
+        </svg>
+
+        <!-- Display Angka Di Tengah Jarum -->
+        <div class="analog-display">
+            <div class="gear-box" id="analog-gear">1</div>
+            <div class="speed-box" id="analog-speed">0</div>
+            <div class="unit-text">MPH</div>
+            <div class="rpm-text">RPM <br><span>x1000</span></div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
