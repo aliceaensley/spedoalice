@@ -45,10 +45,10 @@ function setSpeed(speed) {
         elements.analogSpeed.innerText = calculatedSpeed;
     }
 
-    // 2. Rotasi Jarum Berdasarkan Kecepatan (MPH 0 - 180)
+    // 2. Rotasi Jarum Berdasarkan Kecepatan (MPH 0 - 180) Kalibrasi Presisi (222 Deg)
     if (elements.analogNeedle) {
         const minAngle = 0;
-        const maxAngle = 250;
+        const maxAngle = 222; 
         const maxSpeedLimit = 180; 
         
         const currentSpeed = Math.min(Math.max(calculatedSpeed, 0), maxSpeedLimit);
