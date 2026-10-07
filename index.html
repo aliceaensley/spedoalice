@@ -53,15 +53,15 @@
         </div>
     </div>
 
-    <!-- SPEDO KEDUA (PINK SPEEDOMETER BAWAH KANAN) -->
+    <!-- SPEDO KEDUA (PINK SPEEDOMETER 180 MPH BAWAH KANAN) -->
     <div class="analog-speedo-container">
         <svg class="analog-gauge" viewBox="0 0 200 200">
             <!-- Ring Luar Pink Glow -->
             <circle cx="100" cy="100" r="92" class="gauge-neon-ring" />
             <circle cx="100" cy="100" r="88" class="gauge-bg" />
             
-            <!-- Zona Redline Kecepatan Tinggi (180 - 240) -->
-            <path d="M 100 100 L 162.2 37.8 A 88 88 0 0 1 144 176.2 Z" class="gauge-red-zone" />
+            <!-- Zona Redline Kecepatan Tinggi (140 - 180) -->
+            <path d="M 100 100 L 159 66 A 88 88 0 0 1 100 188 Z" class="gauge-red-zone" />
             
             <!-- Striping Skala Garis-Garis -->
             <circle cx="100" cy="100" r="83" class="gauge-ticks" />
@@ -69,20 +69,17 @@
             <!-- Teks Satuan MPH -->
             <text x="100" y="70" class="gauge-unit-text">mph</text>
 
-            <!-- Angka Skala Kecepatan Presisi Melingkar (0 - 240 MPH) -->
+            <!-- Angka Skala Kecepatan Melingkar Presisi (0 - 180 MPH) -->
             <text x="44" y="156" class="gauge-num">0</text>
-            <text x="32" y="128" class="gauge-num">20</text>
-            <text x="31" y="96" class="gauge-num">40</text>
-            <text x="41" y="66" class="gauge-num">60</text>
-            <text x="63" y="44" class="gauge-num">80</text>
-            <text x="100" y="34" class="gauge-num">100</text>
-            <text x="137" y="44" class="gauge-num">120</text>
-            <text x="159" y="66" class="gauge-num">140</text>
-            <text x="169" y="96" class="gauge-num">160</text>
-            <text x="168" y="128" class="gauge-num gauge-num-red">180</text>
-            <text x="156" y="156" class="gauge-num gauge-num-red">200</text>
-            <text x="132" y="174" class="gauge-num gauge-num-red">220</text>
-            <text x="100" y="180" class="gauge-num gauge-num-red">240</text>
+            <text x="31" y="121" class="gauge-num">20</text>
+            <text x="33" y="82" class="gauge-num">40</text>
+            <text x="52" y="50" class="gauge-num">60</text>
+            <text x="82" y="34" class="gauge-num">80</text>
+            <text x="118" y="34" class="gauge-num">100</text>
+            <text x="148" y="50" class="gauge-num">120</text>
+            <text x="167" y="82" class="gauge-num gauge-num-red">140</text>
+            <text x="169" y="121" class="gauge-num gauge-num-red">160</text>
+            <text x="156" y="156" class="gauge-num gauge-num-red">180</text>
 
             <!-- Jarum Putih Neon (Point awal menunjuk ke angka 0 MPH) -->
             <line id="analog-needle" x1="100" y1="100" x2="44" y2="156" class="gauge-needle" />
