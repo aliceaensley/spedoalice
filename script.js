@@ -22,10 +22,25 @@ function setEngine(state) {
 
 function setSpeed(speed) {
     if (!elements.speed) return;
+    
+    let calculatedSpeed = 0;
     switch(speedMode) {
-        case 1: elements.speed.innerText = `${Math.round(speed * 2.236936)} MPH`; break;
-        case 2: elements.speed.innerText = `${Math.round(speed * 1.943844)} Knots`; break;
-        default: elements.speed.innerText = `${Math.round(speed * 3.6)} KMH`;
+        case 1: 
+            calculatedSpeed = Math.round(speed * 2.236936);
+            elements.speed.innerText = `${calculatedSpeed} MPH`; 
+            break;
+        case 2: 
+            calculatedSpeed = Math.round(speed * 1.943844);
+            elements.speed.innerText = `${calculatedSpeed} Knots`; 
+            break;
+        default: 
+            calculatedSpeed = Math.round(speed * 3.6);
+            elements.speed.innerText = `${calculatedSpeed} KMH`;
+    }
+
+    // Update Angka Kecepatan di Spedo Analog Kedua
+    if (elements.analogSpeed) {
+        elements.analogSpeed.innerText = calculatedSpeed;
     }
 }
 
@@ -34,11 +49,14 @@ function setRPM(rpm) {
     if (!elements.rpm) return;
     
     let realRpm = rpm;
+    let normalizedRpm = rpm;
 
     // Jika game mengoperkan data rasio desimal (0.00 - 1.00)
-    // Otomatis dikalikan ke estimasi RPM kendaraan (max 8000 RPM)
     if (rpm <= 1.0) {
         realRpm = rpm * 8000; 
+        normalizedRpm = rpm;
+    } else {
+        normalizedRpm = rpm / 8000; // Normalisasi ke 0.0 - 1.0 untuk jarum
     }
 
     const val = Math.round(realRpm);
@@ -49,6 +67,16 @@ function setRPM(rpm) {
         elements.rpm.classList.add('rpm-high');
     } else {
         elements.rpm.classList.remove('rpm-high');
+    }
+
+    // Rotasi Jarum di Spedo Analog Kedua (-135 deg sampai 135 deg)
+    if (elements.analogNeedle) {
+        const minAngle = -135;
+        const maxAngle = 135;
+        const currentRpm = Math.min(Math.max(normalizedRpm, 0), 1);
+        const rotationAngle = minAngle + (currentRpm * (maxAngle - minAngle));
+        
+        elements.analogNeedle.style.transform = `rotate(${rotationAngle}deg)`;
     }
 }
 
@@ -70,12 +98,21 @@ function setHealth(health) {
 
 function setGear(gear) {
     if (!elements.gear) return;
+    
+    let gearText = 'N';
     if (gear === 0) {
-        elements.gear.innerText = 'N';
+        gearText = 'N';
     } else if (gear === -1) {
-        elements.gear.innerText = 'R';
+        gearText = 'R';
     } else {
-        elements.gear.innerText = String(gear);
+        gearText = String(gear);
+    }
+
+    elements.gear.innerText = gearText;
+
+    // Update Gigi di Spedo Analog Kedua
+    if (elements.analogGear) {
+        elements.analogGear.innerText = gearText;
     }
 }
 
@@ -124,7 +161,11 @@ document.addEventListener('DOMContentLoaded', () => {
         odometer: document.getElementById('odometer'),
         truckModel: document.getElementById('truck-model'),
         truckVid: document.getElementById('truck-vid'),
-        truckPlate: document.getElementById('truck-plate')
+        truckPlate: document.getElementById('truck-plate'),
+        // Elemen Spedo Kedua (Analog)
+        analogSpeed: document.getElementById('analog-speed'),
+        analogGear: document.getElementById('analog-gear'),
+        analogNeedle: document.getElementById('analog-needle')
     };
 
     loadConfigFromURL();
@@ -144,5 +185,7 @@ window.addEventListener('message', (event) => {
         if (data.gear !== undefined) setGear(data.gear);
         if (data.engine !== undefined) setEngine(data.engine);
         if (data.odometer !== undefined) setOdometer(data.odometer);
+        if (data.headlights !== undefined) setHeadlights(data.headlights);
+        if (data.seatbelts !== undefined) setSeatbelts(data.seatbelts);
     }
 });
