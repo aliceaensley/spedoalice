@@ -233,10 +233,6 @@ html, body {
     stroke-width: 1.5;
 }
 
-.gauge-red-zone {
-    fill: rgba(231, 76, 60, 0.35);
-}
-
 /* Striping Skala */
 .gauge-ticks {
     fill: none;
@@ -255,7 +251,7 @@ html, body {
     letter-spacing: 1px;
 }
 
-/* Angka Pink/Putih Jelas dibaca */
+/* Angka Putih Jelas */
 .gauge-num {
     font-family: 'Arial Black', sans-serif;
     font-size: 10px;
