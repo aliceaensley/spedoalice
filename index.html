@@ -53,7 +53,7 @@
         </div>
     </div>
 
-    <!-- SPEDO KEDUA (ANALOG TACHOMETER BAWAH KANAN) -->
+    <!-- SPEDO KEDUA (ANALOG TACHOMETER BAWAH KANAN DENGAN ANGKA 0-9) -->
     <div class="analog-speedo-container">
         <svg class="analog-gauge" viewBox="0 0 200 200">
             <!-- Background Lingkaran Spedo -->
@@ -66,12 +66,24 @@
             <!-- Ring Luar Striping -->
             <circle cx="100" cy="100" r="88" class="gauge-ring" />
             
+            <!-- ANGKA SKALA ANALOG (0 - 9) -->
+            <text x="38" y="146" class="gauge-num">0</text>
+            <text x="28" y="112" class="gauge-num">1</text>
+            <text x="32" y="76" class="gauge-num">2</text>
+            <text x="50" y="48" class="gauge-num">3</text>
+            <text x="80" y="32" class="gauge-num">4</text>
+            <text x="115" y="32" class="gauge-num">5</text>
+            <text x="146" y="48" class="gauge-num">6</text>
+            <text x="162" y="76" class="gauge-num gauge-num-red">7</text>
+            <text x="164" y="112" class="gauge-num gauge-num-red">8</text>
+            <text x="154" y="146" class="gauge-num gauge-num-red">9</text>
+
             <!-- Jarum Analog (Rotasi via JS) -->
             <line id="analog-needle" x1="100" y1="100" x2="30" y2="140" class="gauge-needle" />
             <circle cx="100" cy="100" r="8" class="gauge-center-cap" />
         </svg>
 
-        <!-- Display Angka Di Tengah Jarum -->
+        <!-- Display Angka Di Tengah Jarum (Digital) -->
         <div class="analog-display">
             <div class="gear-box" id="analog-gear">1</div>
             <div class="speed-box" id="analog-speed">0</div>
