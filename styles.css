@@ -234,8 +234,7 @@ html, body {
 }
 
 .gauge-red-zone {
-    fill: #e74c3c;
-    opacity: 0.5;
+    fill: rgba(231, 76, 60, 0.35);
 }
 
 /* Striping Skala */
@@ -256,7 +255,7 @@ html, body {
     letter-spacing: 1px;
 }
 
-/* Angka Pink Neon */
+/* Angka Pink/Putih Jelas dibaca */
 .gauge-num {
     font-family: 'Arial Black', sans-serif;
     font-size: 10px;
@@ -266,11 +265,6 @@ html, body {
     dominant-baseline: central;
     user-select: none;
     filter: drop-shadow(0 0 2px #ff69b4);
-}
-
-.gauge-num-red {
-    fill: #ff4d4d;
-    filter: drop-shadow(0 0 2px #ff4d4d);
 }
 
 /* Jarum Putih Glowing */
