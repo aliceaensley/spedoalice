@@ -201,16 +201,17 @@ html, body {
 }
 
 /* =========================================================
-   STYLING SPEDO KEDUA (ANALOG TACHOMETER BAWAH KANAN)
+   STYLING SPEDO KEDUA (DESAIN NEON CYAN SESUAI GAMBAR SAMPLING)
    ========================================================= */
 .analog-speedo-container {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 200px;
-    height: 200px;
+    bottom: 25px;
+    right: 25px;
+    width: 240px;
+    height: 240px;
     z-index: 9999;
     pointer-events: none;
+    filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.4));
 }
 
 .analog-gauge {
@@ -218,59 +219,82 @@ html, body {
     height: 100%;
 }
 
-.gauge-bg {
-    fill: #1c2120;
-    stroke: #2b3130;
-    stroke-width: 4;
+/* Ring Neon Cyan */
+.gauge-neon-ring {
+    fill: none;
+    stroke: #00d4ff;
+    stroke-width: 3.5;
+    filter: drop-shadow(0 0 6px #00d4ff);
 }
 
-.gauge-orange-zone {
-    fill: #d97706;
-    opacity: 0.85;
+.gauge-bg {
+    fill: #111518;
+    stroke: #007799;
+    stroke-width: 1.5;
 }
 
 .gauge-red-zone {
-    fill: #dc2626;
-    opacity: 0.9;
+    fill: #c0392b;
+    opacity: 0.45;
 }
 
-.gauge-ring {
+/* Striping Skala */
+.gauge-ticks {
     fill: none;
-    stroke: #ffffff;
-    stroke-width: 3;
-    stroke-dasharray: 4, 6;
+    stroke: #00d4ff;
+    stroke-width: 2.5;
+    stroke-dasharray: 2, 6;
 }
 
-/* Angka Skala Analog (0 - 9) */
-.gauge-num {
-    font-family: 'Impact', 'Arial Black', sans-serif;
+/* Teks mph */
+.gauge-unit-text {
+    font-family: 'Segoe UI', Arial, sans-serif;
     font-size: 13px;
     font-weight: bold;
-    fill: #ffffff;
+    fill: #00d4ff;
+    text-anchor: middle;
+    letter-spacing: 1px;
+}
+
+/* Angka Cyan Neon */
+.gauge-num {
+    font-family: 'Arial Black', 'Impact', sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    fill: #00d4ff;
     text-anchor: middle;
     dominant-baseline: middle;
     user-select: none;
-    filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.8));
+    filter: drop-shadow(0 0 3px #00d4ff);
 }
 
 .gauge-num-red {
-    fill: #ff3333;
+    fill: #ff4d4d;
+    filter: drop-shadow(0 0 3px #ff4d4d);
 }
 
+/* Jarum Merah Glowing */
 .gauge-needle {
-    stroke: #ffffff;
-    stroke-width: 4;
+    stroke: #ff2a2a;
+    stroke-width: 3.5;
     stroke-linecap: round;
     transform-origin: 100px 100px;
-    transition: transform 0.05s ease-out;
+    transition: transform 0.05s linear;
+    filter: drop-shadow(0 0 6px #ff0000);
 }
 
-.gauge-center-cap {
-    fill: #4b5563;
-    stroke: #1f2937;
-    stroke-width: 2;
+/* Tutup Tengah Jarum */
+.gauge-center-cap-outer {
+    fill: #00d4ff;
 }
 
+.gauge-center-cap-inner {
+    fill: #111518;
+    stroke: #00d4ff;
+    stroke-width: 1.5;
+}
+
+/* Display Angka Digital Tambahan di Tengah */
 .analog-display {
     position: absolute;
     top: 0;
@@ -281,45 +305,29 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-family: 'Arial Black', sans-serif;
     color: #ffffff;
+    pointer-events: none;
 }
 
 .gear-box {
-    background: #000000;
-    padding: 2px 10px;
-    font-size: 20px;
+    position: absolute;
+    top: 110px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 1px 8px;
+    font-size: 16px;
     border-radius: 4px;
-    border: 1px solid #333;
-    margin-bottom: 15px;
+    border: 1px solid #00d4ff;
+    color: #00d4ff;
 }
 
 .speed-box {
-    background: #000000;
-    padding: 2px 14px;
-    font-size: 26px;
-    border-radius: 4px;
-    border: 1px solid #333;
-}
-
-.unit-text {
-    font-size: 13px;
-    font-weight: bold;
-    font-style: italic;
-    margin-top: 2px;
-    text-shadow: 1px 1px 2px #000;
-}
-
-.rpm-text {
     position: absolute;
-    right: 32px;
-    top: 78px;
-    font-size: 10px;
-    font-style: italic;
-    text-align: right;
-    line-height: 1;
-}
-
-.rpm-text span {
-    font-size: 8px;
+    top: 138px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 1px 12px;
+    font-size: 20px;
+    border-radius: 4px;
+    border: 1px solid #00d4ff;
+    color: #ffffff;
 }
