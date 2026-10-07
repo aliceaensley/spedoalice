@@ -45,12 +45,12 @@ function setSpeed(speed) {
         elements.analogSpeed.innerText = calculatedSpeed;
     }
 
-    // 2. Rotasi Jarum Berdasarkan Kecepatan (MPH 0 - 240)
-    // 0 deg = Angka 0 MPH | 250 deg = Angka 240 MPH
+    // 2. Rotasi Jarum Berdasarkan Kecepatan (MPH 0 - 180)
+    // 0 deg = Angka 0 MPH | 250 deg = Angka 180 MPH
     if (elements.analogNeedle) {
         const minAngle = 0;
         const maxAngle = 250;
-        const maxSpeedLimit = 240; 
+        const maxSpeedLimit = 180; 
         
         const currentSpeed = Math.min(Math.max(calculatedSpeed, 0), maxSpeedLimit);
         const rotationAngle = minAngle + ((currentSpeed / maxSpeedLimit) * (maxAngle - minAngle));
