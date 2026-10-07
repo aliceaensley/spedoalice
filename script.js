@@ -6,14 +6,18 @@ const onOrOff = state => state ? 'On' : 'Off';
 
 // Fungsi membaca data (Nama, VID, Plat) dari URL Dashboard
 function loadConfigFromURL() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const nameParam = urlParams.get('name');
-    const vidParam = urlParams.get('vid');
-    const plateParam = urlParams.get('plate');
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const nameParam = urlParams.get('name');
+        const vidParam = urlParams.get('vid');
+        const plateParam = urlParams.get('plate');
 
-    if (nameParam && elements.truckModel) elements.truckModel.innerText = nameParam;
-    if (vidParam && elements.truckVid) elements.truckVid.innerText = vidParam;
-    if (plateParam && elements.truckPlate) elements.truckPlate.innerText = plateParam;
+        if (nameParam && elements.truckModel) elements.truckModel.innerText = nameParam;
+        if (vidParam && elements.truckVid) elements.truckVid.innerText = vidParam;
+        if (plateParam && elements.truckPlate) elements.truckPlate.innerText = plateParam;
+    } catch (e) {
+        console.error("Error loading URL config:", e);
+    }
 }
 
 function setEngine(state) {
@@ -21,62 +25,57 @@ function setEngine(state) {
 }
 
 function setSpeed(speed) {
-    if (!elements.speed) return;
-    
     let calculatedSpeed = 0;
     switch(speedMode) {
         case 1: 
             calculatedSpeed = Math.round(speed * 2.236936);
-            elements.speed.innerText = `${calculatedSpeed} MPH`; 
+            if (elements.speed) elements.speed.innerText = `${calculatedSpeed} MPH`; 
             break;
         case 2: 
             calculatedSpeed = Math.round(speed * 1.943844);
-            elements.speed.innerText = `${calculatedSpeed} Knots`; 
+            if (elements.speed) elements.speed.innerText = `${calculatedSpeed} Knots`; 
             break;
         default: 
             calculatedSpeed = Math.round(speed * 3.6);
-            elements.speed.innerText = `${calculatedSpeed} KMH`;
+            if (elements.speed) elements.speed.innerText = `${calculatedSpeed} KMH`;
     }
 
-    // Update Angka Kecepatan di Spedo Analog Kedua
+    // 1. Update Angka Digital Kecepatan di Spedo Bawah
     if (elements.analogSpeed) {
         elements.analogSpeed.innerText = calculatedSpeed;
+    }
+
+    // 2. Rotasi Jarum Merah Berdasarkan Kecepatan (MPH 0 - 240)
+    // -125 deg = Angka 0 | +125 deg = Angka 240
+    if (elements.analogNeedle) {
+        const minAngle = -125;
+        const maxAngle = 125;
+        const maxSpeedLimit = 240; 
+        
+        const currentSpeed = Math.min(Math.max(calculatedSpeed, 0), maxSpeedLimit);
+        const rotationAngle = minAngle + ((currentSpeed / maxSpeedLimit) * (maxAngle - minAngle));
+        
+        elements.analogNeedle.style.transform = `rotate(${rotationAngle}deg)`;
     }
 }
 
 // SISTEM RPM DENGAN AUTO-CONVERT & DYNAMICAL REDLINE
 function setRPM(rpm) {
-    if (!elements.rpm) return;
-    
     let realRpm = rpm;
-    let normalizedRpm = rpm;
 
-    // Jika game mengoperkan data rasio desimal (0.00 - 1.00)
     if (rpm <= 1.0) {
         realRpm = rpm * 8000; 
-        normalizedRpm = rpm;
-    } else {
-        normalizedRpm = rpm / 8000; // Normalisasi ke 0.0 - 1.0 untuk jarum
     }
 
     const val = Math.round(realRpm);
-    elements.rpm.innerText = `${val} RPM`;
-
-    // Indikator Merah / Redline jika di atas 5500 RPM
-    if (val >= 5500) {
-        elements.rpm.classList.add('rpm-high');
-    } else {
-        elements.rpm.classList.remove('rpm-high');
-    }
-
-    // Rotasi Jarum di Spedo Analog Kedua (-135 deg sampai 135 deg)
-    if (elements.analogNeedle) {
-        const minAngle = -135;
-        const maxAngle = 135;
-        const currentRpm = Math.min(Math.max(normalizedRpm, 0), 1);
-        const rotationAngle = minAngle + (currentRpm * (maxAngle - minAngle));
-        
-        elements.analogNeedle.style.transform = `rotate(${rotationAngle}deg)`;
+    
+    if (elements.rpm) {
+        elements.rpm.innerText = `${val} RPM`;
+        if (val >= 5500) {
+            elements.rpm.classList.add('rpm-high');
+        } else {
+            elements.rpm.classList.remove('rpm-high');
+        }
     }
 }
 
@@ -97,8 +96,6 @@ function setHealth(health) {
 }
 
 function setGear(gear) {
-    if (!elements.gear) return;
-    
     let gearText = 'N';
     if (gear === 0) {
         gearText = 'N';
@@ -108,9 +105,9 @@ function setGear(gear) {
         gearText = String(gear);
     }
 
-    elements.gear.innerText = gearText;
+    if (elements.gear) elements.gear.innerText = gearText;
 
-    // Update Gigi di Spedo Analog Kedua
+    // Update Gigi di Spedo Bawah
     if (elements.analogGear) {
         elements.analogGear.innerText = gearText;
     }
@@ -144,10 +141,10 @@ function setSeatbelts(state) {
 }
 
 function setOdometer(distance) {
-    if (elements.odometer) elements.odometer.innerText = distance.toFixed(1) + ' Miles';
+    if (elements.odometer) elements.odometer.innerText = Number(distance).toFixed(1) + ' Miles';
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function initElements() {
     elements = {
         engine: document.getElementById('engine'),
         speed: document.getElementById('speed'),
@@ -162,18 +159,25 @@ document.addEventListener('DOMContentLoaded', () => {
         truckModel: document.getElementById('truck-model'),
         truckVid: document.getElementById('truck-vid'),
         truckPlate: document.getElementById('truck-plate'),
-        // Elemen Spedo Kedua (Analog)
         analogSpeed: document.getElementById('analog-speed'),
         analogGear: document.getElementById('analog-gear'),
         analogNeedle: document.getElementById('analog-needle')
     };
 
     loadConfigFromURL();
-});
+}
+
+document.addEventListener('DOMContentLoaded', initElements);
 
 // Listener Event dari FiveM / NUI
 window.addEventListener('message', (event) => {
     const data = event.data;
+    if (!data) return;
+
+    if (!elements.speed) {
+        initElements();
+    }
+
     if (data.type === "updateHUD") {
         if (data.name && elements.truckModel) elements.truckModel.innerText = data.name;
         if (data.vid && elements.truckVid) elements.truckVid.innerText = data.vid;
