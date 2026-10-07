@@ -46,7 +46,6 @@ function setSpeed(speed) {
     }
 
     // 2. Rotasi Jarum Berdasarkan Kecepatan (MPH 0 - 180)
-    // 0 deg = Angka 0 MPH | 250 deg = Angka 180 MPH
     if (elements.analogNeedle) {
         const minAngle = 0;
         const maxAngle = 250;
