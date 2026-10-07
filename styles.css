@@ -241,6 +241,22 @@ html, body {
     stroke-dasharray: 4, 6;
 }
 
+/* Angka Skala Analog (0 - 9) */
+.gauge-num {
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    fill: #ffffff;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    user-select: none;
+    filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.8));
+}
+
+.gauge-num-red {
+    fill: #ff3333;
+}
+
 .gauge-needle {
     stroke: #ffffff;
     stroke-width: 4;
