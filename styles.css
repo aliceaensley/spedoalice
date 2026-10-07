@@ -201,7 +201,7 @@ html, body {
 }
 
 /* =========================================================
-   STYLING SPEDO KEDUA (DESAIN NEON CYAN SESUAI GAMBAR SAMPLING)
+   STYLING SPEDO KEDUA (DESAIN NEON CYAN PRESISI)
    ========================================================= */
 .analog-speedo-container {
     position: fixed;
@@ -249,28 +249,28 @@ html, body {
 /* Teks mph */
 .gauge-unit-text {
     font-family: 'Segoe UI', Arial, sans-serif;
-    font-size: 13px;
+    font-size: 11px;
     font-weight: bold;
     fill: #00d4ff;
     text-anchor: middle;
     letter-spacing: 1px;
 }
 
-/* Angka Cyan Neon */
+/* Angka Cyan Neon Presisi */
 .gauge-num {
-    font-family: 'Arial Black', 'Impact', sans-serif;
-    font-size: 12px;
+    font-family: 'Arial Black', sans-serif;
+    font-size: 10px;
     font-weight: 900;
     fill: #00d4ff;
     text-anchor: middle;
-    dominant-baseline: middle;
+    dominant-baseline: central;
     user-select: none;
-    filter: drop-shadow(0 0 3px #00d4ff);
+    filter: drop-shadow(0 0 2px #00d4ff);
 }
 
 .gauge-num-red {
     fill: #ff4d4d;
-    filter: drop-shadow(0 0 3px #ff4d4d);
+    filter: drop-shadow(0 0 2px #ff4d4d);
 }
 
 /* Jarum Merah Glowing */
