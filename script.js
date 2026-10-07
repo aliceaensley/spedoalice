@@ -4,6 +4,39 @@ let indicators = 0;
 
 const onOrOff = state => state ? 'On' : 'Off';
 
+// Tabel Sudut Rotasi Presisi Berdasarkan Koordinat Angka di SVG
+// 0 MPH = 0 Deg (Titik Awal Pas di Angka 0)
+// 180 MPH = 200 Deg (Titik Akhir Pas di Angka 180)
+const SPEED_ANGLES = [
+    { speed: 0,   angle: 0 },
+    { speed: 20,  angle: 21 },
+    { speed: 40,  angle: 44 },
+    { speed: 60,  angle: 68 },
+    { speed: 80,  angle: 90 },
+    { speed: 100, angle: 112 },
+    { speed: 120, angle: 133 },
+    { speed: 140, angle: 156 },
+    { speed: 160, angle: 178 },
+    { speed: 180, angle: 200 }
+];
+
+// Fungsi Interpolasi Presisi Antar Titik Angka
+function calculatePreciseAngle(speed) {
+    if (speed <= 0) return 0;
+    if (speed >= 180) return 200;
+
+    for (let i = 0; i < SPEED_ANGLES.length - 1; i++) {
+        const p1 = SPEED_ANGLES[i];
+        const p2 = SPEED_ANGLES[i + 1];
+
+        if (speed >= p1.speed && speed <= p2.speed) {
+            const ratio = (speed - p1.speed) / (p2.speed - p1.speed);
+            return p1.angle + ratio * (p2.angle - p1.angle);
+        }
+    }
+    return 0;
+}
+
 // Fungsi membaca data (Nama, VID, Plat) dari URL Dashboard
 function loadConfigFromURL() {
     try {
@@ -45,15 +78,9 @@ function setSpeed(speed) {
         elements.analogSpeed.innerText = calculatedSpeed;
     }
 
-    // 2. Rotasi Jarum Berdasarkan Kecepatan (MPH 0 - 180) Kalibrasi Presisi (222 Deg)
+    // 2. Rotasi Jarum Berdasarkan Interpolasi Sudut Presisi
     if (elements.analogNeedle) {
-        const minAngle = 0;
-        const maxAngle = 222; 
-        const maxSpeedLimit = 180; 
-        
-        const currentSpeed = Math.min(Math.max(calculatedSpeed, 0), maxSpeedLimit);
-        const rotationAngle = minAngle + ((currentSpeed / maxSpeedLimit) * (maxAngle - minAngle));
-        
+        const rotationAngle = calculatePreciseAngle(calculatedSpeed);
         elements.analogNeedle.style.transform = `rotate(${rotationAngle}deg)`;
     }
 }
