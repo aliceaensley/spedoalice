@@ -1,12 +1,15 @@
 let elements = {};
 let speedMode = 1;
 let indicators = 0;
+let lastSeatbeltState = null; // Menyimpan status terakhir seatbelt
 
 const onOrOff = state => state ? 'On' : 'Off';
 
-// Tabel Sudut Rotasi Presisi Berdasarkan Koordinat Angka di SVG
-// 0 MPH = 0 Deg (Titik Awal Pas di Angka 0)
-// 180 MPH = 200 Deg (Titik Akhir Pas di Angka 180)
+// Memuat Objek Audio tunggal (seatbelton.mp3)
+const soundSeatbelt = new Audio('seatbelton.mp3');
+soundSeatbelt.volume = 0.5; // Atur volume suara (0.0 - 1.0)
+
+// Tabel Sudut Rotasi Presisi
 const SPEED_ANGLES = [
     { speed: 0,   angle: 0 },
     { speed: 20,  angle: 21 },
@@ -20,7 +23,6 @@ const SPEED_ANGLES = [
     { speed: 180, angle: 200 }
 ];
 
-// Fungsi Interpolasi Presisi Antar Titik Angka
 function calculatePreciseAngle(speed) {
     if (speed <= 0) return 0;
     if (speed >= 180) return 200;
@@ -37,7 +39,6 @@ function calculatePreciseAngle(speed) {
     return 0;
 }
 
-// Fungsi membaca data (Nama, VID, Plat) dari URL Dashboard
 function loadConfigFromURL() {
     try {
         const urlParams = new URLSearchParams(window.location.search);
@@ -73,19 +74,16 @@ function setSpeed(speed) {
             if (elements.speed) elements.speed.innerText = `${calculatedSpeed} KMH`;
     }
 
-    // 1. Update Angka Digital Kecepatan di Spedo Bawah
     if (elements.analogSpeed) {
         elements.analogSpeed.innerText = calculatedSpeed;
     }
 
-    // 2. Rotasi Jarum Berdasarkan Interpolasi Sudut Presisi
     if (elements.analogNeedle) {
         const rotationAngle = calculatePreciseAngle(calculatedSpeed);
         elements.analogNeedle.style.transform = `rotate(${rotationAngle}deg)`;
     }
 }
 
-// SISTEM RPM DENGAN AUTO-CONVERT & DYNAMICAL REDLINE
 function setRPM(rpm) {
     let realRpm = rpm;
 
@@ -105,7 +103,6 @@ function setRPM(rpm) {
     }
 }
 
-// FUEL DENGAN DESIMAL (KOMA)
 function setFuel(fuelPercent) {
     if (elements.fuel) {
         const val = (fuelPercent * 100).toFixed(1).replace('.', ',');
@@ -113,7 +110,6 @@ function setFuel(fuelPercent) {
     }
 }
 
-// HEALTH DENGAN DESIMAL (KOMA)
 function setHealth(health) {
     if (elements.health) {
         const val = (health * 100).toFixed(1).replace('.', ',');
@@ -133,7 +129,6 @@ function setGear(gear) {
 
     if (elements.gear) elements.gear.innerText = gearText;
 
-    // Update Gigi di Spedo Bawah
     if (elements.analogGear) {
         elements.analogGear.innerText = gearText;
     }
@@ -162,8 +157,21 @@ function setRightIndicator(state) {
     }
 }
 
+// LOGIKA PASANG / LEPAS SEATBELT DENGAN SATU AUDIO (seatbelton.mp3)
 function setSeatbelts(state) {
-    if (elements.seatbelts) elements.seatbelts.innerText = onOrOff(state);
+    const isBeltOn = Boolean(state);
+
+    if (elements.seatbelts) {
+        elements.seatbelts.innerText = onOrOff(isBeltOn);
+    }
+
+    // Bunyikan seatbelton.mp3 setiap kali ada perubahan status (baik dari On ke Off, atau Off ke On)
+    if (lastSeatbeltState !== null && lastSeatbeltState !== isBeltOn) {
+        soundSeatbelt.currentTime = 0;
+        soundSeatbelt.play().catch(e => console.log("Audio play error:", e));
+    }
+
+    lastSeatbeltState = isBeltOn;
 }
 
 function setOdometer(distance) {
@@ -191,8 +199,6 @@ function initElements() {
     };
 
     loadConfigFromURL();
-    
-    // Set posisi jarum awal ke 0 saat pertama kali dimuat
     setSpeed(0);
 }
 
