@@ -2,12 +2,17 @@ let elements = {};
 let speedMode = 1;
 let indicators = 0;
 let lastSeatbeltState = null; // Menyimpan status terakhir seatbelt
+let lastLockState = null;     // Menyimpan status terakhir kunci pintu
 
 const onOrOff = state => state ? 'On' : 'Off';
 
-// Memuat Objek Audio tunggal (seatbelton.mp3)
+// Memuat Objek Audio
 const soundSeatbelt = new Audio('seatbelton.mp3');
-soundSeatbelt.volume = 0.5; // Atur volume suara (0.0 - 1.0)
+const soundLock = new Audio('lock.mp3');
+
+// Atur Volume Suara (0.0 - 1.0)
+soundSeatbelt.volume = 0.5;
+soundLock.volume = 0.5;
 
 // Tabel Sudut Rotasi Presisi
 const SPEED_ANGLES = [
@@ -157,7 +162,7 @@ function setRightIndicator(state) {
     }
 }
 
-// LOGIKA PASANG / LEPAS SEATBELT DENGAN SATU AUDIO (seatbelton.mp3)
+// LOGIKA PASANG / LEPAS SEATBELT DENGAN AUDIO (seatbelton.mp3)
 function setSeatbelts(state) {
     const isBeltOn = Boolean(state);
 
@@ -165,13 +170,26 @@ function setSeatbelts(state) {
         elements.seatbelts.innerText = onOrOff(isBeltOn);
     }
 
-    // Bunyikan seatbelton.mp3 setiap kali ada perubahan status (baik dari On ke Off, atau Off ke On)
+    // Bunyikan seatbelton.mp3 setiap kali ada perubahan status
     if (lastSeatbeltState !== null && lastSeatbeltState !== isBeltOn) {
         soundSeatbelt.currentTime = 0;
         soundSeatbelt.play().catch(e => console.log("Audio play error:", e));
     }
 
     lastSeatbeltState = isBeltOn;
+}
+
+// LOGIKA KUNCI / BUKA PINTU MOBIL DENGAN AUDIO (lock.mp3)
+function setDoorLock(state) {
+    const isLocked = Boolean(state);
+
+    // Bunyikan lock.mp3 setiap kali status kunci berubah (baik dikunci maupun dibuka)
+    if (lastLockState !== null && lastLockState !== isLocked) {
+        soundLock.currentTime = 0;
+        soundLock.play().catch(e => console.log("Audio play error:", e));
+    }
+
+    lastLockState = isLocked;
 }
 
 function setOdometer(distance) {
@@ -226,5 +244,9 @@ window.addEventListener('message', (event) => {
         if (data.odometer !== undefined) setOdometer(data.odometer);
         if (data.headlights !== undefined) setHeadlights(data.headlights);
         if (data.seatbelts !== undefined) setSeatbelts(data.seatbelts);
+        
+        // Cek status penguncian pintu dari game
+        if (data.locked !== undefined) setDoorLock(data.locked);
+        if (data.doors !== undefined) setDoorLock(data.doors);
     }
 });
